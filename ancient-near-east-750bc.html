@@ -19,9 +19,7 @@
   .page-header {
     text-align: center;
     padding: 40px 20px 10px;
-    position: relative;
   }
-
   .page-header h1 {
     font-family: 'Cinzel', serif;
     font-size: 2.6rem;
@@ -31,7 +29,6 @@
     text-transform: uppercase;
     text-shadow: 0 2px 20px rgba(200, 170, 80, 0.3);
   }
-
   .page-header .subtitle {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
@@ -40,21 +37,27 @@
     margin-top: 6px;
     letter-spacing: 0.08em;
   }
-
   .divider {
     width: 200px;
     height: 1px;
     background: linear-gradient(90deg, transparent, #a89870, transparent);
     margin: 16px auto 10px;
   }
-
-  .map-container {
-    max-width: 900px;
-    margin: 20px auto;
+  .accuracy-note {
+    max-width: 800px;
+    margin: 8px auto 0;
+    font-size: 0.85rem;
+    color: #8a7e60;
+    font-style: italic;
+    text-align: center;
     padding: 0 20px;
-    position: relative;
   }
 
+  .map-container {
+    max-width: 950px;
+    margin: 20px auto;
+    padding: 0 20px;
+  }
   .map-wrapper {
     position: relative;
     border: 2px solid #3d3520;
@@ -63,47 +66,38 @@
     background: #2a2418;
     box-shadow: 0 0 60px rgba(0,0,0,0.5), inset 0 0 80px rgba(0,0,0,0.3);
   }
+  svg { width: 100%; height: auto; display: block; }
 
-  svg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  /* Territory styling */
   .territory {
     cursor: pointer;
     transition: filter 0.3s, opacity 0.3s;
   }
-  .territory:hover {
-    filter: brightness(1.3);
-  }
+  .territory:hover { filter: brightness(1.35); }
 
   .territory-label {
     font-family: 'Cinzel', serif;
     font-weight: 700;
-    fill: currentColor;
     pointer-events: none;
     text-anchor: middle;
     letter-spacing: 0.12em;
   }
-
-  .city-dot {
-    pointer-events: none;
-  }
-
+  .city-dot { pointer-events: none; }
   .city-label {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 10px;
     fill: #e8dcc0;
     pointer-events: none;
   }
-
   .water-label {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    fill: #5a7a9a;
+    fill: #5a8aaa;
     pointer-events: none;
+  }
+  .desert-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    pointer-events: none;
+    letter-spacing: 0.3em;
   }
 
   /* Tooltip */
@@ -113,18 +107,14 @@
     border: 1px solid #5a4d30;
     border-radius: 6px;
     padding: 16px 20px;
-    max-width: 320px;
+    max-width: 360px;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.25s;
     z-index: 100;
     box-shadow: 0 8px 32px rgba(0,0,0,0.6);
   }
-
-  .tooltip.visible {
-    opacity: 1;
-  }
-
+  .tooltip.visible { opacity: 1; }
   .tooltip h3 {
     font-family: 'Cinzel', serif;
     font-size: 1.1rem;
@@ -132,20 +122,17 @@
     margin-bottom: 4px;
     letter-spacing: 0.08em;
   }
-
   .tooltip .ruler {
     font-style: italic;
     color: #b8a878;
     font-size: 0.95rem;
     margin-bottom: 8px;
   }
-
   .tooltip p {
     font-size: 0.95rem;
     line-height: 1.5;
     color: #c4b898;
   }
-
   .tooltip .relation {
     margin-top: 8px;
     padding-top: 8px;
@@ -153,25 +140,24 @@
     font-size: 0.85rem;
     color: #d4a050;
     font-weight: 600;
+    line-height: 1.4;
   }
 
-  /* Legend */
+  /* Legend & Timeline */
   .legend {
-    max-width: 900px;
-    margin: 20px auto 40px;
+    max-width: 950px;
+    margin: 20px auto 20px;
     padding: 0 20px;
   }
-
   .legend-inner {
     border: 1px solid #3d3520;
     border-radius: 4px;
     padding: 20px 28px;
     background: #221e14;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     gap: 10px 24px;
   }
-
   .legend-title {
     grid-column: 1 / -1;
     font-family: 'Cinzel', serif;
@@ -181,14 +167,12 @@
     margin-bottom: 6px;
     text-transform: uppercase;
   }
-
   .legend-item {
     display: flex;
     align-items: center;
     gap: 10px;
     font-size: 0.95rem;
   }
-
   .legend-swatch {
     width: 18px;
     height: 18px;
@@ -197,9 +181,69 @@
     border: 1px solid rgba(255,255,255,0.1);
   }
 
+  /* Phoenicia timeline panel */
+  .timeline-panel {
+    max-width: 950px;
+    margin: 0 auto 20px;
+    padding: 0 20px;
+  }
+  .timeline-inner {
+    border: 1px solid #3d3520;
+    border-radius: 4px;
+    padding: 24px 28px;
+    background: #221e14;
+  }
+  .timeline-inner h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: #80d0d0;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+  .timeline-events {
+    position: relative;
+    padding-left: 20px;
+    border-left: 2px solid #3a3020;
+  }
+  .timeline-event {
+    position: relative;
+    margin-bottom: 14px;
+    padding-left: 18px;
+  }
+  .timeline-event:last-child { margin-bottom: 0; }
+  .timeline-event::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #4a8a8a;
+    border: 2px solid #221e14;
+  }
+  .timeline-event.conquest::before {
+    background: #c04040;
+  }
+  .timeline-event .year {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: #d4c878;
+    font-weight: 700;
+  }
+  .timeline-event .desc {
+    font-size: 0.92rem;
+    color: #b8a880;
+    line-height: 1.45;
+    margin-top: 2px;
+  }
+  .timeline-event .desc strong {
+    color: #d4c0a0;
+  }
+
   .scripture-ref {
     max-width: 900px;
-    margin: 0 auto 40px;
+    margin: 20px auto 40px;
     padding: 0 20px;
     text-align: center;
     font-style: italic;
@@ -220,11 +264,12 @@
   <h1>The Ancient Near East</h1>
   <div class="subtitle">Kingdoms &amp; Powers · c. 750 BC</div>
   <div class="divider"></div>
+  <div class="accuracy-note">Borders are approximate — ancient kingdoms had fluid frontiers and overlapping zones of influence. Hover over each territory for details.</div>
 </div>
 
 <div class="map-container">
   <div class="map-wrapper">
-    <svg viewBox="0 0 800 700" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 0 850 750" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="glow">
           <feGaussianBlur stdDeviation="2" result="blur"/>
@@ -238,237 +283,414 @@
           <circle cx="170" cy="30" r="0.8" fill="#2e2818" opacity="0.3"/>
           <circle cx="90" cy="110" r="1.2" fill="#2e2818" opacity="0.25"/>
         </pattern>
-        <linearGradient id="seaGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#1e3348"/>
-          <stop offset="100%" stop-color="#162a3d"/>
+        <!-- Desert texture pattern -->
+        <pattern id="desertDots" patternUnits="userSpaceOnUse" width="30" height="30">
+          <circle cx="5" cy="5" r="0.7" fill="#4a4030" opacity="0.3"/>
+          <circle cx="20" cy="18" r="0.5" fill="#4a4030" opacity="0.25"/>
+          <circle cx="12" cy="28" r="0.6" fill="#4a4030" opacity="0.2"/>
+        </pattern>
+
+        <linearGradient id="seaGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#132838"/><stop offset="100%" stop-color="#1a3248"/>
         </linearGradient>
-        <!-- Territory colors -->
+        <!-- Territory gradients -->
         <linearGradient id="assyriaGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#8b2020"/>
-          <stop offset="100%" stop-color="#6e1a1a"/>
+          <stop offset="0%" stop-color="#8b2020"/><stop offset="100%" stop-color="#6e1a1a"/>
+        </linearGradient>
+        <linearGradient id="babylonGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#6a5030"/><stop offset="100%" stop-color="#504020"/>
         </linearGradient>
         <linearGradient id="aramGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#7a6b28"/>
-          <stop offset="100%" stop-color="#5e5220"/>
+          <stop offset="0%" stop-color="#7a6b28"/><stop offset="100%" stop-color="#5e5220"/>
         </linearGradient>
         <linearGradient id="israelGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#2a6e3a"/>
-          <stop offset="100%" stop-color="#1e5a2e"/>
+          <stop offset="0%" stop-color="#2a6e3a"/><stop offset="100%" stop-color="#1e5a2e"/>
         </linearGradient>
         <linearGradient id="judahGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#2a5a8a"/>
-          <stop offset="100%" stop-color="#1e4a72"/>
+          <stop offset="0%" stop-color="#2a5a8a"/><stop offset="100%" stop-color="#1e4a72"/>
         </linearGradient>
         <linearGradient id="philGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#7a4a8a"/>
-          <stop offset="100%" stop-color="#5e3870"/>
+          <stop offset="0%" stop-color="#7a4a8a"/><stop offset="100%" stop-color="#5e3870"/>
         </linearGradient>
         <linearGradient id="moabGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#8a6a30"/>
-          <stop offset="100%" stop-color="#705828"/>
+          <stop offset="0%" stop-color="#8a6a30"/><stop offset="100%" stop-color="#705828"/>
         </linearGradient>
         <linearGradient id="edomGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#a85030"/>
-          <stop offset="100%" stop-color="#884028"/>
+          <stop offset="0%" stop-color="#a85030"/><stop offset="100%" stop-color="#884028"/>
         </linearGradient>
         <linearGradient id="ammonGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#5a7a5a"/>
-          <stop offset="100%" stop-color="#486848"/>
+          <stop offset="0%" stop-color="#5a7a5a"/><stop offset="100%" stop-color="#486848"/>
         </linearGradient>
         <linearGradient id="phoenGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#3a8a8a"/>
-          <stop offset="100%" stop-color="#2e7070"/>
+          <stop offset="0%" stop-color="#3a8a8a"/><stop offset="100%" stop-color="#2e7070"/>
         </linearGradient>
         <linearGradient id="egyptGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#8a7a3a"/>
-          <stop offset="100%" stop-color="#6e6230"/>
+          <stop offset="0%" stop-color="#8a7a3a"/><stop offset="100%" stop-color="#6e6230"/>
+        </linearGradient>
+        <linearGradient id="hamaGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#6a5a7a"/><stop offset="100%" stop-color="#504068"/>
         </linearGradient>
       </defs>
 
-      <!-- Background -->
-      <rect width="800" height="700" fill="url(#parchment)"/>
+      <!-- Background land -->
+      <rect width="850" height="750" fill="url(#parchment)"/>
+
+      <!-- Desert texture overlay for eastern/southern regions -->
+      <rect x="400" y="300" width="450" height="450" fill="url(#desertDots)" opacity="0.5"/>
+      <rect x="100" y="550" width="400" height="200" fill="url(#desertDots)" opacity="0.4"/>
 
       <!-- Mediterranean Sea -->
-      <path d="M0,0 L180,0 L170,80 L155,160 L140,240 L128,310 L118,380 L108,440 L95,510 L80,580 L60,650 L40,700 L0,700 Z"
+      <path d="M0,0 L145,0 L148,60 L150,120 L148,140 
+               L145,180 L142,210 L140,250 L138,280 
+               L142,300 L155,315 L160,320 L155,330 L145,340 
+               L140,370 L138,400 L140,430 
+               L145,460 L148,490 L150,520 
+               L148,560 L140,600 L130,650 L120,700 L100,750 
+               L0,750 Z"
             fill="url(#seaGrad)" opacity="0.9"/>
 
-      <!-- Sea waves texture -->
-      <g opacity="0.15" stroke="#4a7a9a" stroke-width="0.5" fill="none">
-        <path d="M20,100 Q60,95 100,100 Q140,105 160,100"/>
-        <path d="M10,200 Q50,195 90,200 Q130,205 150,200"/>
-        <path d="M15,300 Q55,295 85,300 Q115,305 135,300"/>
-        <path d="M10,400 Q40,395 70,400 Q100,405 120,400"/>
-        <path d="M5,500 Q35,495 60,500 Q85,505 100,500"/>
+      <!-- Sea wave texture -->
+      <g opacity="0.12" stroke="#4a7a9a" stroke-width="0.5" fill="none">
+        <path d="M20,100 Q50,96 80,100 Q110,104 130,100"/>
+        <path d="M15,200 Q45,196 75,200 Q105,204 125,200"/>
+        <path d="M10,350 Q40,346 70,350 Q95,354 120,350"/>
+        <path d="M10,500 Q40,496 70,500 Q100,504 130,500"/>
+        <path d="M5,650 Q35,646 60,650 Q85,654 110,650"/>
       </g>
 
-      <!-- ASSYRIAN EMPIRE (massive, northeast) -->
+      <!-- ============================================ -->
+      <!-- TERRITORIES -->
+      <!-- ============================================ -->
+
+      <!-- ASSYRIAN EMPIRE - heartland in upper Mesopotamia -->
       <path class="territory" id="assyria"
-            d="M350,0 L800,0 L800,200 L750,220 L700,210 L650,230 L600,220 L550,200 L500,210 L450,190 L400,180 L370,160 L350,120 L340,60 Z"
-            fill="url(#assyriaGrad)" opacity="0.75" stroke="#a03030" stroke-width="1.5"/>
+            d="M420,0 L850,0 L850,240 L800,260 L740,250 L680,240 
+               L620,250 L560,240 L520,230 L480,210 L450,190 
+               L430,160 L420,120 L415,60 Z"
+            fill="url(#assyriaGrad)" opacity="0.7" stroke="#a03030" stroke-width="1.5"/>
 
-      <!-- ARAM-DAMASCUS (Syria) -->
+      <!-- BABYLONIA - below Assyria, between the rivers, 
+           weak and under Assyrian domination c. 750 BC -->
+      <path class="territory" id="babylonia"
+            d="M520,230 L560,240 L620,250 L680,240 L740,250 
+               L800,260 L850,240 L850,450 
+               L800,460 L740,450 L680,440 
+               L620,430 L570,420 L530,400 
+               L500,370 L490,330 L500,280 Z"
+            fill="url(#babylonGrad)" opacity="0.55" stroke="#8a7040" stroke-width="1.2"/>
+
+      <!-- HAMATH - buffer state in central Syria -->
+      <path class="territory" id="hamath"
+            d="M148,60 L250,50 L350,55 L420,60 L415,60 L420,120 
+               L430,160 L400,170 L360,160 L310,150 
+               L260,140 L200,135 L160,130 L150,120 L148,90 Z"
+            fill="url(#hamaGrad)" opacity="0.65" stroke="#7a6a8a" stroke-width="1.2"/>
+
+      <!-- ARAM-DAMASCUS -->
       <path class="territory" id="aram"
-            d="M300,100 L350,120 L370,160 L400,180 L450,190 L440,230 L420,270 L380,290 L340,280 L300,260 L270,230 L260,190 L270,150 L280,120 Z"
-            fill="url(#aramGrad)" opacity="0.75" stroke="#9a8a38" stroke-width="1.5"/>
+            d="M200,135 L260,140 L310,150 L360,160 L400,170 
+               L430,160 L450,190 L480,210 L470,240 
+               L450,270 L420,290 L380,300 
+               L340,295 L310,285 L285,275 
+               L260,260 L240,240 L220,215 
+               L200,190 L190,165 L195,145 Z"
+            fill="url(#aramGrad)" opacity="0.7" stroke="#9a8a38" stroke-width="1.5"/>
 
-      <!-- PHOENICIA (coastal strip) -->
+      <!-- PHOENICIA - narrow coastal strip -->
       <path class="territory" id="phoenicia"
-            d="M155,160 L200,140 L230,150 L260,190 L270,230 L240,270 L210,290 L185,300 L170,270 L160,230 L155,190 Z"
-            fill="url(#phoenGrad)" opacity="0.75" stroke="#4aaa9a" stroke-width="1.5"/>
+            d="M148,140 L195,145 L190,165 L200,190 L220,215 
+               L225,230 L215,250 L200,265 L190,280 
+               L172,290 L160,298 L155,310 
+               L155,315 L142,300 L138,280 
+               L140,250 L142,210 L145,180 L148,160 Z"
+            fill="url(#phoenGrad)" opacity="0.7" stroke="#4aaa9a" stroke-width="1.5"/>
 
-      <!-- KINGDOM OF ISRAEL (northern kingdom) -->
+      <!-- KINGDOM OF ISRAEL -->
       <path class="territory" id="israel"
-            d="M185,300 L210,290 L240,270 L300,260 L340,280 L360,310 L350,350 L330,380 L300,400 L260,410 L220,400 L190,380 L165,350 L160,330 L170,310 Z"
-            fill="url(#israelGrad)" opacity="0.75" stroke="#3a9a4a" stroke-width="1.5"/>
+            d="M155,310 L160,298 L172,290 L190,280 L200,265 
+               L215,250 L240,240 L260,260 L285,275 
+               L310,285 L340,295 L380,300 
+               L400,310 L410,340 L400,370 L380,390 
+               L350,405 L320,415 L290,420 
+               L260,418 L240,415 L220,420 
+               L195,418 L175,410 
+               L160,400 L150,380 L148,360 
+               L145,340 L155,330 L160,320 Z"
+            fill="url(#israelGrad)" opacity="0.7" stroke="#3a9a4a" stroke-width="1.5"/>
 
       <!-- AMMON -->
       <path class="territory" id="ammon"
-            d="M360,310 L420,270 L460,290 L470,340 L460,390 L430,410 L390,400 L360,380 L350,350 Z"
-            fill="url(#ammonGrad)" opacity="0.75" stroke="#6a9a6a" stroke-width="1.5"/>
+            d="M400,310 L460,290 L490,310 L500,350 
+               L490,390 L470,420 L440,430 L410,420 
+               L390,405 L380,390 L400,370 L410,340 Z"
+            fill="url(#ammonGrad)" opacity="0.7" stroke="#6a9a6a" stroke-width="1.5"/>
 
-      <!-- KINGDOM OF JUDAH (southern kingdom) -->
+      <!-- KINGDOM OF JUDAH -->
       <path class="territory" id="judah"
-            d="M140,400 L190,380 L220,400 L260,410 L300,400 L330,420 L340,450 L330,490 L300,510 L260,520 L220,510 L180,500 L150,470 L135,440 Z"
-            fill="url(#judahGrad)" opacity="0.75" stroke="#3a7aaa" stroke-width="1.5"/>
+            d="M175,410 L195,418 L220,420 L240,415 L260,418 
+               L290,420 L320,415 L340,430 L350,450 
+               L345,475 L335,495 L315,510 
+               L290,520 L260,525 L230,520 
+               L205,510 L185,495 L170,475 
+               L162,450 L165,430 Z"
+            fill="url(#judahGrad)" opacity="0.7" stroke="#3a7aaa" stroke-width="1.5"/>
 
-      <!-- PHILISTIA -->
+      <!-- PHILISTIA - southern coastal strip -->
       <path class="territory" id="philistia"
-            d="M108,440 L135,440 L150,470 L155,500 L140,530 L118,540 L100,520 L95,480 Z"
-            fill="url(#philGrad)" opacity="0.75" stroke="#9a5aaa" stroke-width="1.5"/>
+            d="M138,400 L160,400 L175,410 L165,430 L162,450 
+               L170,475 L168,500 L160,520 
+               L150,535 L148,540 
+               L148,520 L145,490 L145,460 L148,430 L140,410 Z"
+            fill="url(#philGrad)" opacity="0.7" stroke="#9a5aaa" stroke-width="1.5"/>
 
       <!-- MOAB -->
       <path class="territory" id="moab"
-            d="M330,420 L360,380 L390,400 L430,410 L440,450 L430,490 L400,510 L360,510 L330,490 Z"
-            fill="url(#moabGrad)" opacity="0.75" stroke="#aa8a40" stroke-width="1.5"/>
+            d="M340,430 L350,405 L380,390 L390,405 L410,420 
+               L440,430 L450,460 L445,490 
+               L430,510 L400,520 L370,520 
+               L345,510 L335,495 L345,475 L350,450 Z"
+            fill="url(#moabGrad)" opacity="0.7" stroke="#aa8a40" stroke-width="1.5"/>
 
       <!-- EDOM -->
       <path class="territory" id="edom"
-            d="M220,510 L260,520 L300,510 L330,490 L360,510 L400,510 L410,550 L400,600 L370,640 L320,660 L270,660 L230,640 L200,600 L190,560 L200,530 Z"
-            fill="url(#edomGrad)" opacity="0.75" stroke="#c06838" stroke-width="1.5"/>
+            d="M230,520 L260,525 L290,520 L315,510 L335,495 
+               L345,510 L370,520 L400,520 
+               L420,550 L410,590 L390,630 
+               L360,660 L320,680 L280,685 
+               L240,670 L210,640 L195,600 
+               L190,565 L200,540 Z"
+            fill="url(#edomGrad)" opacity="0.7" stroke="#c06838" stroke-width="1.5"/>
 
-      <!-- EGYPT (far south-west, partial) -->
+      <!-- EGYPT -->
       <path class="territory" id="egypt"
-            d="M0,580 L80,580 L95,510 L100,520 L118,540 L140,530 L155,500 L180,500 L200,530 L190,560 L200,600 L180,650 L140,680 L100,700 L0,700 Z"
-            fill="url(#egyptGrad)" opacity="0.6" stroke="#aa9a4a" stroke-width="1.5"/>
+            d="M0,600 L100,580 L130,560 L148,540 L150,535 
+               L160,520 L168,500 L185,495 L205,510 
+               L200,540 L190,565 L195,600 
+               L180,650 L150,700 L120,730 L80,750 L0,750 Z"
+            fill="url(#egyptGrad)" opacity="0.55" stroke="#aa9a4a" stroke-width="1.5"/>
+
+      <!-- ============================================ -->
+      <!-- DESERT / WILDERNESS LABELS -->
+      <!-- ============================================ -->
+      <text x="580" y="520" class="desert-label" font-size="14" fill="#5a5040" opacity="0.5" 
+            text-anchor="middle" transform="rotate(8,580,520)">ARABIAN DESERT</text>
+      
+      <text x="500" y="600" class="desert-label" font-size="10" fill="#4a4030" opacity="0.4" 
+            text-anchor="middle">Wilderness</text>
+
+      <text x="180" y="580" class="desert-label" font-size="9" fill="#4a4030" opacity="0.45" 
+            text-anchor="middle">Negev</text>
+
+      <!-- SYRIAN DESERT label (between Aram and Babylonia) -->
+      <text x="490" y="280" class="desert-label" font-size="10" fill="#4a4030" opacity="0.45" 
+            text-anchor="middle" transform="rotate(-15,490,280)">Syrian Desert</text>
+
+      <!-- ============================================ -->
+      <!-- WATER FEATURES -->
+      <!-- ============================================ -->
 
       <!-- Dead Sea -->
-      <ellipse cx="295" cy="465" rx="12" ry="40" fill="#1a3040" opacity="0.8" transform="rotate(-5, 295, 465)"/>
+      <ellipse cx="310" cy="470" rx="11" ry="38" fill="#152535" opacity="0.85" transform="rotate(-3, 310, 470)"/>
 
       <!-- Sea of Galilee -->
-      <ellipse cx="275" cy="300" rx="10" ry="14" fill="#1e3348" opacity="0.8"/>
+      <ellipse cx="290" cy="305" rx="10" ry="15" fill="#1a3348" opacity="0.85"/>
 
       <!-- Jordan River -->
-      <path d="M275,314 Q280,340 285,370 Q290,400 295,425" stroke="#1e3348" stroke-width="2.5" fill="none" opacity="0.7"/>
+      <path d="M290,320 Q295,350 300,380 Q305,410 310,432" 
+            stroke="#1a3348" stroke-width="2.5" fill="none" opacity="0.7"/>
 
-      <!-- Euphrates River (in Assyria) -->
-      <path d="M500,0 Q480,40 490,80 Q510,120 500,160 Q480,200 490,230" stroke="#2a4a60" stroke-width="2.5" fill="none" opacity="0.5"/>
+      <!-- Euphrates River -->
+      <path d="M540,0 Q520,40 530,80 Q545,120 535,160 Q520,200 530,240 Q545,280 540,320 Q530,360 540,400 Q550,430 545,450" 
+            stroke="#2a4a60" stroke-width="2.5" fill="none" opacity="0.5"/>
 
-      <!-- Water labels -->
-      <text x="80" y="250" class="water-label" font-size="14" transform="rotate(-80,80,250)">Mediterranean Sea</text>
-      <text x="295" y="470" class="water-label" font-size="8" text-anchor="middle">Dead Sea</text>
-      <text x="275" y="295" class="water-label" font-size="7" text-anchor="middle">Galilee</text>
-      <text x="510" y="100" class="water-label" font-size="9" transform="rotate(-20,510,100)">Euphrates R.</text>
+      <!-- Tigris River -->
+      <path d="M650,0 Q640,50 645,100 Q655,150 648,200 Q638,240 645,280 Q655,320 650,360 Q640,400 645,440" 
+            stroke="#2a4a60" stroke-width="2" fill="none" opacity="0.4"/>
 
-      <!-- Territory Labels -->
-      <text x="580" y="100" class="territory-label" font-size="22" fill="#d4a0a0" letter-spacing="0.3em">ASSYRIA</text>
-      <text x="580" y="122" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:11px; fill:#b08080; text-anchor:middle;">Neo-Assyrian Empire</text>
+      <!-- Orontes River -->
+      <path d="M280,70 Q270,90 275,110 Q285,130 278,150" 
+            stroke="#2a4a60" stroke-width="1.5" fill="none" opacity="0.35"/>
 
-      <text x="350" y="215" class="territory-label" font-size="14" fill="#d4c878">ARAM</text>
-      <text x="350" y="232" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; fill:#b0a060; text-anchor:middle;">Damascus</text>
+      <!-- ============================================ -->
+      <!-- WATER LABELS -->
+      <!-- ============================================ -->
+      <text x="70" y="350" class="water-label" font-size="15" 
+            transform="rotate(-85,70,350)" text-anchor="middle">Mediterranean Sea</text>
+      <text x="310" y="472" class="water-label" font-size="7.5" text-anchor="middle">Dead Sea</text>
+      <text x="290" y="300" class="water-label" font-size="7" text-anchor="middle">Galilee</text>
+      <text x="552" y="85" class="water-label" font-size="9" transform="rotate(-15,552,85)">Euphrates</text>
+      <text x="660" y="85" class="water-label" font-size="8" transform="rotate(-10,660,85)">Tigris</text>
+      <text x="295" y="375" class="water-label" font-size="7" transform="rotate(-5,295,375)">Jordan R.</text>
 
-      <text x="210" y="220" class="territory-label" font-size="11" fill="#80d0d0">PHOENICIA</text>
+      <!-- ============================================ -->
+      <!-- TERRITORY LABELS -->
+      <!-- ============================================ -->
+      <text x="640" y="110" class="territory-label" font-size="24" fill="#d4a0a0" letter-spacing="0.35em">ASSYRIA</text>
+      <text x="640" y="134" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:12px; fill:#b08080; text-anchor:middle;">Neo-Assyrian Empire</text>
 
-      <text x="255" y="345" class="territory-label" font-size="16" fill="#80d080">ISRAEL</text>
+      <text x="700" y="360" class="territory-label" font-size="16" fill="#c0a870" letter-spacing="0.2em">BABYLONIA</text>
+      <text x="700" y="382" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:11px; fill:#9a8860; text-anchor:middle;">Under Assyrian domination</text>
 
-      <text x="240" y="460" class="territory-label" font-size="16" fill="#80b0e0">JUDAH</text>
+      <text x="290" y="95" class="territory-label" font-size="12" fill="#c0b0d0">HAMATH</text>
 
-      <text x="415" y="345" class="territory-label" font-size="11" fill="#90c090">AMMON</text>
+      <text x="360" y="230" class="territory-label" font-size="15" fill="#d4c878">ARAM</text>
+      <text x="360" y="248" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; fill:#b0a060; text-anchor:middle;">Damascus</text>
 
-      <text x="380" y="460" class="territory-label" font-size="11" fill="#d0b060">MOAB</text>
+      <text x="175" y="240" class="territory-label" font-size="10" fill="#80d0d0" 
+            transform="rotate(-75,175,240)">PHOENICIA</text>
 
-      <text x="120" y="490" class="territory-label" font-size="10" fill="#c090d0">PHILISTIA</text>
+      <text x="265" y="355" class="territory-label" font-size="17" fill="#80d080">ISRAEL</text>
 
-      <text x="310" y="590" class="territory-label" font-size="14" fill="#e0a070">EDOM</text>
+      <text x="255" y="470" class="territory-label" font-size="16" fill="#80b0e0">JUDAH</text>
 
-      <text x="100" y="660" class="territory-label" font-size="16" fill="#d0c070">EGYPT</text>
+      <text x="460" y="365" class="territory-label" font-size="11" fill="#90c090">AMMON</text>
 
-      <!-- Major Cities -->
+      <text x="400" y="475" class="territory-label" font-size="12" fill="#d0b060">MOAB</text>
+
+      <text x="148" y="475" class="territory-label" font-size="9" fill="#c090d0" 
+            transform="rotate(-80,148,475)">PHILISTIA</text>
+
+      <text x="310" y="610" class="territory-label" font-size="15" fill="#e0a070">EDOM</text>
+
+      <text x="110" y="680" class="territory-label" font-size="16" fill="#d0c070">EGYPT</text>
+
+      <!-- ============================================ -->
+      <!-- MAJOR CITIES -->
+      <!-- ============================================ -->
       <g class="cities">
         <!-- Nineveh -->
-        <circle cx="620" cy="60" r="4" fill="#e8d080" class="city-dot" filter="url(#glow)"/>
-        <text x="632" y="64" class="city-label" font-size="10">Nineveh</text>
+        <circle cx="660" cy="60" r="4.5" fill="#e8d080" class="city-dot" filter="url(#glow)"/>
+        <text x="674" y="64" class="city-label" font-size="11">Nineveh</text>
 
         <!-- Asshur -->
-        <circle cx="580" cy="140" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="590" y="144" class="city-label" font-size="9">Asshur</text>
+        <circle cx="610" cy="165" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="622" y="169" class="city-label" font-size="9">Asshur</text>
+
+        <!-- Calah/Nimrud -->
+        <circle cx="640" cy="110" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="652" y="114" class="city-label" font-size="9">Calah</text>
+
+        <!-- Babylon -->
+        <circle cx="600" cy="380" r="4" fill="#d4b060" class="city-dot" filter="url(#glow)"/>
+        <text x="612" y="384" class="city-label" font-size="10">Babylon</text>
+
+        <!-- Ur -->
+        <circle cx="650" cy="430" r="2.5" fill="#c0a060" class="city-dot"/>
+        <text x="660" y="434" class="city-label" font-size="8">Ur</text>
+
+        <!-- Nippur -->
+        <circle cx="620" cy="400" r="2.5" fill="#c0a060" class="city-dot"/>
+        <text x="630" y="404" class="city-label" font-size="8">Nippur</text>
+
+        <!-- Hamath city -->
+        <circle cx="280" cy="90" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="292" y="85" class="city-label" font-size="9">Hamath</text>
 
         <!-- Damascus -->
-        <circle cx="350" cy="250" r="4" fill="#e8d080" class="city-dot" filter="url(#glow)"/>
-        <text x="362" y="254" class="city-label" font-size="10">Damascus</text>
+        <circle cx="380" cy="255" r="4.5" fill="#e8d080" class="city-dot" filter="url(#glow)"/>
+        <text x="393" y="259" class="city-label" font-size="11">Damascus</text>
 
-        <!-- Tyre -->
-        <circle cx="195" cy="270" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="175" y="265" class="city-label" font-size="9">Tyre</text>
+        <!-- Byblos -->
+        <circle cx="162" cy="148" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="170" y="145" class="city-label" font-size="8">Byblos</text>
 
         <!-- Sidon -->
-        <circle cx="190" cy="230" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="170" y="225" class="city-label" font-size="9">Sidon</text>
+        <circle cx="165" cy="210" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="173" y="207" class="city-label" font-size="9">Sidon</text>
 
-        <!-- Samaria -->
-        <circle cx="235" cy="365" r="4" fill="#e8d080" class="city-dot" filter="url(#glow)"/>
-        <text x="205" y="370" class="city-label" font-size="10">Samaria ★</text>
-
-        <!-- Megiddo -->
-        <circle cx="230" cy="325" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="238" y="320" class="city-label" font-size="9">Megiddo</text>
+        <!-- Tyre -->
+        <circle cx="168" cy="268" r="3.5" fill="#d4c070" class="city-dot" filter="url(#glow)"/>
+        <text x="176" y="265" class="city-label" font-size="9">Tyre</text>
 
         <!-- Dan -->
-        <circle cx="280" cy="270" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="290" y="267" class="city-label" font-size="9">Dan</text>
+        <circle cx="265" cy="275" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="250" y="270" class="city-label" font-size="9">Dan</text>
 
-        <!-- Jerusalem -->
-        <circle cx="240" cy="440" r="5" fill="#f0e090" class="city-dot" filter="url(#glow)"/>
-        <text x="200" y="438" class="city-label" font-size="11" font-weight="bold">Jerusalem ★</text>
+        <!-- Hazor -->
+        <circle cx="275" cy="290" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="255" y="290" class="city-label" font-size="8">Hazor</text>
 
-        <!-- Hebron -->
-        <circle cx="235" cy="480" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="245" y="484" class="city-label" font-size="9">Hebron</text>
-
-        <!-- Beersheba -->
-        <circle cx="200" cy="520" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="155" y="524" class="city-label" font-size="9">Beersheba</text>
-
-        <!-- Gaza -->
-        <circle cx="130" cy="470" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="108" y="465" class="city-label" font-size="9">Gaza</text>
-
-        <!-- Rabbah (Amman) -->
-        <circle cx="390" cy="370" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="398" y="374" class="city-label" font-size="9">Rabbah</text>
-
-        <!-- Dibon -->
-        <circle cx="370" cy="470" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="378" y="474" class="city-label" font-size="9">Dibon</text>
-
-        <!-- Bozrah -->
-        <circle cx="340" cy="560" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="350" y="564" class="city-label" font-size="9">Bozrah</text>
+        <!-- Megiddo -->
+        <circle cx="225" cy="330" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="203" y="325" class="city-label" font-size="9">Megiddo</text>
 
         <!-- Jezreel -->
-        <circle cx="252" cy="335" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="260" y="332" class="city-label" font-size="9">Jezreel</text>
+        <circle cx="255" cy="335" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="263" y="332" class="city-label" font-size="8">Jezreel</text>
+
+        <!-- Dor -->
+        <circle cx="162" cy="340" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="165" y="335" class="city-label" font-size="8">Dor</text>
+
+        <!-- Samaria -->
+        <circle cx="230" cy="380" r="5" fill="#e8d080" class="city-dot" filter="url(#glow)"/>
+        <text x="237" y="393" class="city-label" font-size="11" font-weight="bold">Samaria ★</text>
 
         <!-- Joppa -->
-        <circle cx="155" cy="395" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="133" y="392" class="city-label" font-size="9">Joppa</text>
+        <circle cx="162" cy="408" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="145" y="402" class="city-label" font-size="8">Joppa</text>
+
+        <!-- Bethel -->
+        <circle cx="258" cy="425" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="266" y="422" class="city-label" font-size="8">Bethel</text>
+
+        <!-- Jerusalem -->
+        <circle cx="262" cy="447" r="5.5" fill="#f0e090" class="city-dot" filter="url(#glow)"/>
+        <text x="220" y="445" class="city-label" font-size="11" font-weight="bold">Jerusalem ★</text>
+
+        <!-- Hebron -->
+        <circle cx="250" cy="490" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="258" y="494" class="city-label" font-size="9">Hebron</text>
 
         <!-- Lachish -->
-        <circle cx="185" cy="470" r="3" fill="#d4c070" class="city-dot"/>
-        <text x="155" y="478" class="city-label" font-size="9">Lachish</text>
+        <circle cx="205" cy="480" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="180" y="482" class="city-label" font-size="8">Lachish</text>
+
+        <!-- Beersheba -->
+        <circle cx="215" cy="530" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="175" y="534" class="city-label" font-size="9">Beersheba</text>
+
+        <!-- Gaza -->
+        <circle cx="155" cy="505" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="135" y="500" class="city-label" font-size="9">Gaza</text>
+
+        <!-- Ashkelon -->
+        <circle cx="152" cy="478" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="128" y="475" class="city-label" font-size="8">Ashkelon</text>
+
+        <!-- Ashdod -->
+        <circle cx="157" cy="450" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="131" y="448" class="city-label" font-size="8">Ashdod</text>
+
+        <!-- Ekron -->
+        <circle cx="175" cy="438" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="155" y="432" class="city-label" font-size="8">Ekron</text>
+
+        <!-- Rabbah -->
+        <circle cx="420" cy="380" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="430" y="384" class="city-label" font-size="9">Rabbah</text>
+
+        <!-- Dibon -->
+        <circle cx="380" cy="480" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="390" y="484" class="city-label" font-size="9">Dibon</text>
+
+        <!-- Kir-Moab -->
+        <circle cx="370" cy="500" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="380" y="504" class="city-label" font-size="8">Kir-Moab</text>
+
+        <!-- Bozrah -->
+        <circle cx="350" cy="560" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="360" y="564" class="city-label" font-size="9">Bozrah</text>
+
+        <!-- Sela -->
+        <circle cx="330" cy="600" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="340" y="604" class="city-label" font-size="8">Sela</text>
       </g>
 
-      <!-- Compass Rose -->
-      <g transform="translate(720, 620)" opacity="0.6">
+      <!-- ============================================ -->
+      <!-- COMPASS ROSE -->
+      <!-- ============================================ -->
+      <g transform="translate(775, 660)" opacity="0.6">
         <circle cx="0" cy="0" r="28" fill="none" stroke="#8a7e60" stroke-width="0.5"/>
         <line x1="0" y1="-25" x2="0" y2="25" stroke="#8a7e60" stroke-width="0.5"/>
         <line x1="-25" y1="0" x2="25" y2="0" stroke="#8a7e60" stroke-width="0.5"/>
@@ -479,12 +701,13 @@
         <text x="-34" y="4" text-anchor="middle" font-family="Cinzel, serif" font-size="8" fill="#8a7e60">W</text>
       </g>
 
-      <!-- Scale indicator -->
-      <g transform="translate(600, 670)" opacity="0.5">
-        <line x1="0" y1="0" x2="80" y2="0" stroke="#8a7e60" stroke-width="1"/>
+      <!-- Scale -->
+      <g transform="translate(630, 710)" opacity="0.5">
+        <line x1="0" y1="0" x2="90" y2="0" stroke="#8a7e60" stroke-width="1"/>
         <line x1="0" y1="-4" x2="0" y2="4" stroke="#8a7e60" stroke-width="1"/>
-        <line x1="80" y1="-4" x2="80" y2="4" stroke="#8a7e60" stroke-width="1"/>
-        <text x="40" y="14" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="9" fill="#8a7e60">~100 miles</text>
+        <line x1="45" y1="-3" x2="45" y2="3" stroke="#8a7e60" stroke-width="0.5"/>
+        <line x1="90" y1="-4" x2="90" y2="4" stroke="#8a7e60" stroke-width="1"/>
+        <text x="45" y="14" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="9" fill="#8a7e60">~100 miles</text>
       </g>
 
     </svg>
@@ -504,7 +727,9 @@
   <div class="legend-inner">
     <div class="legend-title">Kingdoms &amp; Territories</div>
     <div class="legend-item"><div class="legend-swatch" style="background:#8b2020;"></div> Assyrian Empire</div>
-    <div class="legend-item"><div class="legend-swatch" style="background:#7a6b28;"></div> Aram-Damascus (Syria)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#6a5030;"></div> Babylonia (Assyrian vassal)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#6a5a7a;"></div> Hamath</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#7a6b28;"></div> Aram-Damascus</div>
     <div class="legend-item"><div class="legend-swatch" style="background:#3a8a8a;"></div> Phoenicia</div>
     <div class="legend-item"><div class="legend-swatch" style="background:#2a6e3a;"></div> Kingdom of Israel</div>
     <div class="legend-item"><div class="legend-swatch" style="background:#2a5a8a;"></div> Kingdom of Judah</div>
@@ -513,6 +738,47 @@
     <div class="legend-item"><div class="legend-swatch" style="background:#7a4a8a;"></div> Philistia</div>
     <div class="legend-item"><div class="legend-swatch" style="background:#a85030;"></div> Edom</div>
     <div class="legend-item"><div class="legend-swatch" style="background:#8a7a3a;"></div> Egypt</div>
+  </div>
+</div>
+
+<!-- Phoenicia Conquest Timeline -->
+<div class="timeline-panel">
+  <div class="timeline-inner">
+    <h2>📜 The Fall of Phoenicia — A Gradual Conquest</h2>
+    <div class="timeline-events">
+      <div class="timeline-event">
+        <div class="year">c. 750 BC — Independent &amp; Thriving</div>
+        <div class="desc">Phoenician city-states (Tyre, Sidon, Byblos) are wealthy, independent maritime powers. <strong>Tyre</strong> under King Hiram II dominates Mediterranean trade from Spain to North Africa.</div>
+      </div>
+      <div class="timeline-event conquest">
+        <div class="year">738 BC — Forced Tribute to Assyria</div>
+        <div class="desc"><strong>Tiglath-Pileser III</strong> campaigns west and forces Tyre, Sidon, and Byblos to pay heavy tribute. They retain self-governance but lose true independence. This is the beginning of the end.</div>
+      </div>
+      <div class="timeline-event">
+        <div class="year">727–722 BC — Tyre Rebels</div>
+        <div class="desc">Tyre, under King Luli, attempts to break free from Assyrian tribute during the transition between Assyrian kings. <strong>Shalmaneser V</strong> besieges Tyre but fails to take the island fortress.</div>
+      </div>
+      <div class="timeline-event conquest">
+        <div class="year">701 BC — Sennacherib's Campaign</div>
+        <div class="desc"><strong>Sennacherib</strong> conquers mainland Phoenician cities including Sidon during his famous western campaign (the same campaign that besieged Jerusalem under Hezekiah). King Luli of Tyre flees to Cyprus. Assyria installs puppet rulers.</div>
+      </div>
+      <div class="timeline-event conquest">
+        <div class="year">677–671 BC — Sidon Destroyed</div>
+        <div class="desc"><strong>Esarhaddon</strong> completely destroys Sidon after a revolt, deports its population, and rebuilds it as an Assyrian colony renamed "Fort Esarhaddon." This is the most devastating blow to Phoenician independence.</div>
+      </div>
+      <div class="timeline-event">
+        <div class="year">612 BC — Assyria Falls</div>
+        <div class="desc">Assyria collapses. Phoenician cities come under <strong>Neo-Babylonian</strong> control under Nebuchadnezzar II.</div>
+      </div>
+      <div class="timeline-event conquest">
+        <div class="year">585–573 BC — Nebuchadnezzar Besieges Tyre</div>
+        <div class="desc"><strong>Nebuchadnezzar II</strong> besieges island Tyre for <strong>13 years</strong> — one of the longest sieges in ancient history. Tyre eventually negotiates terms but is never fully taken. Ezekiel 26–28 prophesies against Tyre during this period.</div>
+      </div>
+      <div class="timeline-event conquest">
+        <div class="year">332 BC — Alexander Conquers Tyre</div>
+        <div class="desc"><strong>Alexander the Great</strong> builds a massive causeway (mole) from the mainland to the island and breaches Tyre's walls after a 7-month siege. This is the final, definitive conquest of Phoenicia — fulfilling Ezekiel's prophecy that Tyre's stones would be thrown into the sea.</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -528,62 +794,74 @@ const data = {
   assyria: {
     name: "Neo-Assyrian Empire",
     ruler: "Tiglath-Pileser III (745–727 BC)",
-    desc: "The dominant superpower of the ancient Near East. Under Tiglath-Pileser III, Assyria launched aggressive westward campaigns, conquering and deporting populations. By 750 BC, Assyria was rapidly expanding, threatening every kingdom in the Levant.",
-    relation: "⚔️ Greatest threat to both Israel and Judah. Conquered Israel's northern territories and eventually destroyed the Northern Kingdom in 722 BC."
+    desc: "The dominant superpower, centered in upper Mesopotamia along the Tigris River. Capital at Calah (Nimrud), later Nineveh. By 750 BC, Tiglath-Pileser III had just seized the throne and was launching aggressive westward campaigns. Assyria's heartland was in Mesopotamia — it had not yet conquered the Levantine coast, though that was imminent.",
+    relation: "⚔️ The existential threat to every kingdom on this map. Destroyed Aram-Damascus (732 BC), the Northern Kingdom of Israel (722 BC), subjugated Phoenicia, and made Judah a vassal."
+  },
+  babylonia: {
+    name: "Babylonia",
+    ruler: "Nabonassar (747–734 BC) — weak, Assyrian-dominated",
+    desc: "The ancient civilization in lower Mesopotamia between the Tigris and Euphrates, with its famous capital at Babylon. By 750 BC, Babylonia was in deep decline — politically fragmented and effectively under Assyrian domination. Nabonassar ruled as little more than an Assyrian puppet. Babylonia would not regain independence until the rise of Nabopolassar and his son Nebuchadnezzar II, who destroyed Assyria (612 BC) and later conquered Judah (586 BC).",
+    relation: "🔄 Dormant threat. Weak in 750 BC, but would eventually become the power that destroyed Jerusalem and carried Judah into exile (2 Kings 25). 'By the rivers of Babylon, there we sat down and wept' (Psalm 137:1)."
+  },
+  hamath: {
+    name: "Kingdom of Hamath",
+    ruler: "Various kings",
+    desc: "A Neo-Hittite/Aramean buffer state in the Orontes River valley of central Syria, between Assyria and Aram-Damascus. Sometimes allied with Aram against Assyria, sometimes submitted as a vassal. An important trade center on routes between Mesopotamia and the Mediterranean.",
+    relation: "🔄 Buffer state. Scripture uses it as the northern boundary marker: 'from Lebo-hamath to the Brook of Egypt' (2 Kings 14:25). Jeroboam II of Israel extended influence to Hamath's border. Conquered by Assyria in 720 BC."
   },
   aram: {
-    name: "Aram-Damascus (Syria)",
+    name: "Aram-Damascus",
     ruler: "Rezin (c. 750–732 BC)",
-    desc: "The powerful Aramean kingdom centered on Damascus. A major regional power that frequently warred with Israel over border territories in Gilead and the Transjordan. Aram and Israel sometimes formed uneasy alliances against Assyria.",
-    relation: "⚔️ Longtime enemy of Israel. Later allied with Israel's King Pekah against Judah in the Syro-Ephraimite War (735 BC). Destroyed by Assyria in 732 BC."
+    desc: "The powerful Aramean kingdom centered on Damascus, situated between Assyria/Hamath to the north and Israel to the south. Controlled the fertile lands around Damascus, the Beqaa Valley approaches, and territory east into the Hauran. Phoenicia blocked access to the coast. Israel's most persistent regional rival.",
+    relation: "⚔️ Longtime enemy of Israel over Gilead and the Transjordan. Later allied with Israel's King Pekah against Judah in the Syro-Ephraimite War (735 BC). Destroyed by Tiglath-Pileser III in 732 BC. Isaiah 7 records God's response."
   },
   phoenicia: {
     name: "Phoenicia",
-    ruler: "Various city-king rulers (Tyre, Sidon, Byblos)",
-    desc: "A confederation of wealthy maritime city-states along the coast of modern Lebanon. Famous for trade, seafaring, purple dye, and the alphabet. Tyre and Sidon were the most powerful cities.",
-    relation: "🤝 Generally allied with Israel through trade. Jezebel, wife of Ahab, was a Phoenician princess from Sidon. Paid tribute to Assyria to maintain autonomy."
+    ruler: "City-kings of Tyre, Sidon, and Byblos",
+    desc: "A narrow but immensely wealthy coastal confederation from Byblos south to Tyre. Hemmed between the Lebanon mountains and the sea. Phoenicia's power came from maritime trade, not territory. Famous for purple dye (Tyrian purple), cedar, the alphabet, and colonies across the Mediterranean including Carthage.",
+    relation: "🤝 Trade partner with Israel. Jezebel was a Sidonian princess. Hiram of Tyre helped build Solomon's Temple. See the timeline below for Phoenicia's gradual conquest by Assyria, Babylon, and finally Alexander the Great."
   },
   israel: {
     name: "Kingdom of Israel",
-    ruler: "Jeroboam II (c. 793–753 BC) / Pekah (c. 752–732 BC)",
-    desc: "The Northern Kingdom, with its capital at Samaria. Under Jeroboam II, Israel reached its greatest territorial extent and prosperity. After his death, political instability and Assyrian pressure brought rapid decline. The prophets Amos and Hosea warned of coming judgment.",
-    relation: "The northern of the two Hebrew kingdoms. Allied with Aram-Damascus against Judah in the Syro-Ephraimite War. Fell to Assyria in 722 BC."
+    ruler: "Jeroboam II (c. 793–753 BC) → instability → Pekah (c. 752–732 BC)",
+    desc: "The Northern Kingdom at its zenith under Jeroboam II. Controlled the coast from Dor south toward Philistia, the Jezreel Valley, Galilee, the Samaria highlands, and Transjordan (Gilead, Bashan). After Jeroboam II's death, six kings in 25 years — political chaos as Assyria closed in. Amos and Hosea prophesied during this period.",
+    relation: "Allied with Aram against Judah in the Syro-Ephraimite War (735 BC). Northern territories stripped by Tiglath-Pileser III. Kingdom destroyed by Assyria in 722 BC — the 'Lost Ten Tribes' deported."
   },
   judah: {
     name: "Kingdom of Judah",
-    ruler: "Azariah/Uzziah (c. 783–742 BC) / Jotham (c. 742–735 BC)",
-    desc: "The Southern Kingdom with its capital at Jerusalem and the Temple of Solomon. Under Uzziah, Judah was prosperous and militarily strong. Isaiah began his prophetic ministry around 740 BC ('the year that King Uzziah died'). Judah faced pressure from both the Israel-Aram coalition and the rising Assyrian Empire.",
-    relation: "The southern Hebrew kingdom. Attacked by the Israel-Aram alliance. King Ahaz later appealed to Assyria for help, making Judah a vassal state."
+    ruler: "Azariah/Uzziah (c. 783–742 BC) → Jotham → Ahaz",
+    desc: "The Southern Kingdom, prosperous under Uzziah who fortified Jerusalem, expanded into Philistine territory, and controlled the Negev. Isaiah's call came 'in the year King Uzziah died' (c. 740 BC). Territory: Jerusalem hill country, Shephelah foothills, Negev to Beersheba.",
+    relation: "Attacked by the Israel-Aram coalition. Ahaz appealed to Assyria for help (Isaiah 7), making Judah a vassal — a decision Isaiah opposed. Survived until Babylon destroyed it in 586 BC."
   },
   ammon: {
     name: "Kingdom of Ammon",
     ruler: "Various kings",
-    desc: "An Transjordanian kingdom east of the Jordan River, with its capital at Rabbah (modern Amman, Jordan). Related to Israel through the biblical tradition of descent from Lot. Frequently clashed with Israel over border territories.",
-    relation: "⚔️ Periodic enemy of both Israel and Judah. Paid tribute to Assyria. The prophet Amos denounced Ammon's atrocities against Gilead."
+    desc: "Transjordanian kingdom east of Gilead, capital at Rabbah (modern Amman). Strategically located on trade routes. Biblical tradition traces descent from Lot, Abraham's nephew.",
+    relation: "⚔️ Periodic enemy. Amos denounced Ammon: 'they ripped open pregnant women in Gilead, that they might enlarge their border' (Amos 1:13). Later became an Assyrian vassal."
   },
   moab: {
     name: "Kingdom of Moab",
     ruler: "Various kings",
-    desc: "A kingdom east of the Dead Sea on a high plateau. Like Ammon, traced its origins to Lot in biblical tradition. The famous Mesha Stele records Moab's earlier conflicts with Israel. Rich in agriculture and livestock.",
-    relation: "⚔️ Longtime rival of Israel and Judah. Alternately independent and vassal. The prophets Isaiah and Amos pronounced oracles against Moab."
+    desc: "Kingdom on the high plateau east of the Dead Sea, between the Arnon and Zered rivers. Rich agricultural land for grain and livestock. The Mesha Stele (c. 840 BC) records Moab's wars with Israel. Biblical descent traced from Lot.",
+    relation: "⚔️ Longtime rival. Ruth the Moabitess was David's great-grandmother. Isaiah 15–16 contains extensive oracles against Moab. Eventually conquered by Assyria, then Babylon."
   },
   philistia: {
     name: "Philistia",
     ruler: "City-kings of Gaza, Ashkelon, Ashdod, Ekron, Gath",
-    desc: "A confederation of five city-states along the southern coastal plain. Descendants of the 'Sea Peoples' who settled around 1175 BC. By 750 BC their power had waned, but they remained a factor in regional politics.",
-    relation: "⚔️ Historic enemy of Israel and Judah since the time of the Judges and King David. By this period, increasingly under Assyrian pressure."
+    desc: "Five city-states (the Pentapolis) along the southern coastal plain. Descended from Aegean 'Sea Peoples' who settled c. 1175 BC. By 750 BC their peak had passed but they controlled the coastal Via Maris trade route.",
+    relation: "⚔️ Historic enemy since Samson and David. Uzziah broke the walls of Gath, Jabneh, and Ashdod (2 Chr 26:6). Increasingly under Assyrian pressure. Ashdod revolted and was crushed by Sargon II in 712 BC."
   },
   edom: {
     name: "Kingdom of Edom",
     ruler: "Various kings",
-    desc: "A kingdom south of the Dead Sea in the rugged terrain of modern southern Jordan. Biblical tradition traces Edom's descent from Esau, Jacob's brother. Controlled important trade routes between Arabia and the Mediterranean.",
-    relation: "⚔️ Bitter rival of Judah. Frequent border conflicts over the Negev and access to the port of Ezion-Geber. The book of Obadiah is entirely devoted to prophecy against Edom."
+    desc: "Kingdom in the rugged mountains of Seir, south of the Dead Sea. Biblical descent from Esau, Jacob's twin. Controlled lucrative trade routes connecting Arabia, Egypt, and the Mediterranean. Known for copper and the fortress of Bozrah.",
+    relation: "⚔️ Bitter rival of Judah. The entire book of Obadiah prophesies against Edom. Amos: 'he pursued his brother with the sword and cast off all pity' (Amos 1:11). Later rejoiced at Jerusalem's fall (Psalm 137:7)."
   },
   egypt: {
     name: "Egypt",
-    ruler: "Various pharaohs (22nd–25th Dynasties — a period of division)",
-    desc: "The ancient superpower to the south was in a period of fragmentation and relative weakness around 750 BC, divided among competing dynasties. Egypt would soon be unified under the Nubian 25th Dynasty (Kushite pharaohs) and attempt to counter Assyrian expansion.",
-    relation: "🔄 Alternately ally and rival. Israel and Judah sometimes sought Egyptian help against Assyria. The prophets repeatedly warned against trusting in Egypt's military aid (Isaiah 31:1)."
+    ruler: "22nd–24th Dynasties (fragmented)",
+    desc: "Around 750 BC, Egypt was divided among competing dynasties — a shadow of its former glory. The Nubian 25th Dynasty was rising and would soon reunify Egypt, attempting to counter Assyria. Remained culturally prestigious but militarily unreliable.",
+    relation: "🔄 Unreliable ally. Isaiah warned: 'Woe to those who go down to Egypt for help and rely on horses' (Isa 31:1). Egypt's Pharaoh So encouraged Israel's last king Hoshea to revolt against Assyria — contributing to Israel's destruction (2 Kings 17:4)."
   }
 };
 
@@ -610,7 +888,7 @@ document.querySelectorAll('.territory').forEach(el => {
     let x = e.clientX + 16;
     let y = e.clientY + 16;
     const rect = tooltip.getBoundingClientRect();
-    if (x + 330 > window.innerWidth) x = e.clientX - 340;
+    if (x + 370 > window.innerWidth) x = e.clientX - 380;
     if (y + rect.height > window.innerHeight) y = e.clientY - rect.height - 16;
     tooltip.style.left = x + 'px';
     tooltip.style.top = y + 'px';
