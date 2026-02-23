@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The World of Isaiah 7 · c. 735 BC</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1610;
+    color: #d4c8a8;
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  .page-header {
+    text-align: center;
+    padding: 40px 20px 10px;
+  }
+  .page-header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #e8d9a0;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-shadow: 0 2px 20px rgba(200, 170, 80, 0.3);
+  }
+  .page-header .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: #a89870;
+    margin-top: 6px;
+    letter-spacing: 0.08em;
+  }
+  .divider {
+    width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #a89870, transparent);
+    margin: 16px auto 10px;
+  }
+  .context-box {
+    max-width: 850px;
+    margin: 10px auto 0;
+    padding: 14px 24px;
+    background: #221e14;
+    border: 1px solid #3d3520;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #b8a880;
+    line-height: 1.55;
+    text-align: center;
+  }
+  .context-box .scripture {
+    font-style: italic;
+    color: #d4c090;
+    margin-bottom: 8px;
+    font-size: 1.05rem;
+  }
+  .context-box .ref {
+    color: #8a7e60;
+    font-size: 0.9rem;
+  }
+
+  .map-container {
+    max-width: 950px;
+    margin: 20px auto;
+    padding: 0 20px;
+  }
+  .map-wrapper {
+    position: relative;
+    border: 2px solid #3d3520;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #2a2418;
+    box-shadow: 0 0 60px rgba(0,0,0,0.5), inset 0 0 80px rgba(0,0,0,0.3);
+  }
+  svg { width: 100%; height: auto; display: block; }
+
+  .territory {
+    cursor: pointer;
+    transition: filter 0.3s, opacity 0.3s;
+  }
+  .territory:hover { filter: brightness(1.35); }
+
+  .territory-label {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    pointer-events: none;
+    text-anchor: middle;
+    letter-spacing: 0.12em;
+  }
+  .city-dot { pointer-events: none; }
+  .city-label {
+    font-family: 'Cormorant Garamond', serif;
+    fill: #e8dcc0;
+    pointer-events: none;
+  }
+  .water-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    fill: #5a8aaa;
+    pointer-events: none;
+  }
+  .desert-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    pointer-events: none;
+    letter-spacing: 0.3em;
+  }
+
+  /* Military movement arrows */
+  .attack-arrow {
+    pointer-events: none;
+  }
+  .arrow-label {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    pointer-events: none;
+  }
+
+  /* Tooltip */
+  .tooltip {
+    position: fixed;
+    background: #1a1610;
+    border: 1px solid #5a4d30;
+    border-radius: 6px;
+    padding: 16px 20px;
+    max-width: 380px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s;
+    z-index: 100;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  }
+  .tooltip.visible { opacity: 1; }
+  .tooltip h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: #e8d9a0;
+    margin-bottom: 4px;
+    letter-spacing: 0.08em;
+  }
+  .tooltip .ruler {
+    font-style: italic;
+    color: #b8a878;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+  .tooltip p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #c4b898;
+  }
+  .tooltip .relation {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #3d3520;
+    font-size: 0.85rem;
+    color: #d4a050;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .tooltip .scripture-tt {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #3d3520;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: #a09070;
+    line-height: 1.4;
+  }
+
+  /* Legend */
+  .legend {
+    max-width: 950px;
+    margin: 20px auto 10px;
+    padding: 0 20px;
+  }
+  .legend-inner {
+    border: 1px solid #3d3520;
+    border-radius: 4px;
+    padding: 20px 28px;
+    background: #221e14;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 10px 24px;
+  }
+  .legend-title {
+    grid-column: 1 / -1;
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: #e8d9a0;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+  }
+  .legend-swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* Arrow legend */
+  .arrow-legend {
+    max-width: 950px;
+    margin: 10px auto 10px;
+    padding: 0 20px;
+  }
+  .arrow-legend-inner {
+    border: 1px solid #3d3520;
+    border-radius: 4px;
+    padding: 16px 28px;
+    background: #221e14;
+  }
+  .arrow-legend-inner h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+    color: #e8d9a0;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .arrow-legend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 8px 20px;
+  }
+  .arrow-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.92rem;
+    color: #b8a880;
+  }
+  .arrow-legend-item .arrow-sample {
+    width: 30px;
+    height: 4px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* Timeline / What happens next */
+  .aftermath {
+    max-width: 950px;
+    margin: 10px auto 20px;
+    padding: 0 20px;
+  }
+  .aftermath-inner {
+    border: 1px solid #3d3520;
+    border-radius: 4px;
+    padding: 24px 28px;
+    background: #221e14;
+  }
+  .aftermath-inner h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: #d4a050;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+  .aftermath-events {
+    position: relative;
+    padding-left: 20px;
+    border-left: 2px solid #3a3020;
+  }
+  .aftermath-event {
+    position: relative;
+    margin-bottom: 14px;
+    padding-left: 18px;
+  }
+  .aftermath-event:last-child { margin-bottom: 0; }
+  .aftermath-event::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #8a6030;
+    border: 2px solid #221e14;
+  }
+  .aftermath-event.destruction::before { background: #c04040; }
+  .aftermath-event.prophecy::before { background: #4a8aaa; }
+  .aftermath-event .year {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: #d4c878;
+    font-weight: 700;
+  }
+  .aftermath-event .desc {
+    font-size: 0.92rem;
+    color: #b8a880;
+    line-height: 1.45;
+    margin-top: 2px;
+  }
+  .aftermath-event .desc strong { color: #d4c0a0; }
+
+  .footer-scripture {
+    max-width: 900px;
+    margin: 20px auto 40px;
+    padding: 0 20px;
+    text-align: center;
+    font-style: italic;
+    color: #8a7e60;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 600px) {
+    .page-header h1 { font-size: 1.5rem; }
+    .legend-inner { grid-template-columns: 1fr 1fr; }
+    .arrow-legend-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>The World of Isaiah 7</h1>
+  <div class="subtitle">The Syro-Ephraimite War · c. 735 BC</div>
+  <div class="divider"></div>
+</div>
+
+<div class="map-container" style="max-width:850px; margin-bottom: 8px;">
+  <div class="context-box">
+    <div class="scripture">"When the house of David was told, 'Aram has allied with Ephraim,' the heart of Ahaz and the heart of his people shook as the trees of the forest shake before the wind."</div>
+    <div class="ref">— Isaiah 7:2</div>
+  </div>
+</div>
+
+<div class="map-container">
+  <div class="map-wrapper">
+    <svg viewBox="0 0 850 750" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glowRed">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <pattern id="parchment" patternUnits="userSpaceOnUse" width="200" height="200">
+          <rect width="200" height="200" fill="#3a3225"/>
+          <circle cx="30" cy="40" r="1" fill="#2e2818" opacity="0.4"/>
+          <circle cx="120" cy="80" r="1.5" fill="#2e2818" opacity="0.3"/>
+          <circle cx="60" cy="150" r="1" fill="#2e2818" opacity="0.35"/>
+          <circle cx="170" cy="30" r="0.8" fill="#2e2818" opacity="0.3"/>
+          <circle cx="90" cy="110" r="1.2" fill="#2e2818" opacity="0.25"/>
+        </pattern>
+        <pattern id="desertDots" patternUnits="userSpaceOnUse" width="30" height="30">
+          <circle cx="5" cy="5" r="0.7" fill="#4a4030" opacity="0.3"/>
+          <circle cx="20" cy="18" r="0.5" fill="#4a4030" opacity="0.25"/>
+          <circle cx="12" cy="28" r="0.6" fill="#4a4030" opacity="0.2"/>
+        </pattern>
+
+        <linearGradient id="seaGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#132838"/><stop offset="100%" stop-color="#1a3248"/>
+        </linearGradient>
+        <linearGradient id="assyriaGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#8b2020"/><stop offset="100%" stop-color="#6e1a1a"/>
+        </linearGradient>
+        <linearGradient id="babylonGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#6a5030"/><stop offset="100%" stop-color="#504020"/>
+        </linearGradient>
+        <linearGradient id="aramGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#7a6b28"/><stop offset="100%" stop-color="#5e5220"/>
+        </linearGradient>
+        <linearGradient id="israelGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#2a6e3a"/><stop offset="100%" stop-color="#1e5a2e"/>
+        </linearGradient>
+        <linearGradient id="judahGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#2a5a8a"/><stop offset="100%" stop-color="#1e4a72"/>
+        </linearGradient>
+        <linearGradient id="philGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#7a4a8a"/><stop offset="100%" stop-color="#5e3870"/>
+        </linearGradient>
+        <linearGradient id="moabGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#8a6a30"/><stop offset="100%" stop-color="#705828"/>
+        </linearGradient>
+        <linearGradient id="edomGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#a85030"/><stop offset="100%" stop-color="#884028"/>
+        </linearGradient>
+        <linearGradient id="ammonGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#5a7a5a"/><stop offset="100%" stop-color="#486848"/>
+        </linearGradient>
+        <linearGradient id="phoenGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3a8a8a"/><stop offset="100%" stop-color="#2e7070"/>
+        </linearGradient>
+        <linearGradient id="egyptGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#8a7a3a"/><stop offset="100%" stop-color="#6e6230"/>
+        </linearGradient>
+        <linearGradient id="hamaGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#6a5a7a"/><stop offset="100%" stop-color="#504068"/>
+        </linearGradient>
+
+        <!-- Arrow markers -->
+        <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#c04040"/>
+        </marker>
+        <marker id="arrowOrange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#c08030"/>
+        </marker>
+        <marker id="arrowYellow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#c0a840"/>
+        </marker>
+        <marker id="arrowCyan" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#40a0c0"/>
+        </marker>
+      </defs>
+
+      <!-- Background -->
+      <rect width="850" height="750" fill="url(#parchment)"/>
+      <rect x="400" y="300" width="450" height="450" fill="url(#desertDots)" opacity="0.5"/>
+      <rect x="100" y="550" width="400" height="200" fill="url(#desertDots)" opacity="0.4"/>
+
+      <!-- Mediterranean Sea -->
+      <path d="M0,0 L145,0 L148,60 L150,120 L148,140 
+               L145,180 L142,210 L140,250 L138,280 
+               L142,300 L155,315 L160,320 L155,330 L145,340 
+               L140,370 L138,400 L140,430 
+               L145,460 L148,490 L150,520 
+               L148,560 L140,600 L130,650 L120,700 L100,750 
+               L0,750 Z"
+            fill="url(#seaGrad)" opacity="0.9"/>
+      <g opacity="0.12" stroke="#4a7a9a" stroke-width="0.5" fill="none">
+        <path d="M20,100 Q50,96 80,100 Q110,104 130,100"/>
+        <path d="M15,200 Q45,196 75,200 Q105,204 125,200"/>
+        <path d="M10,350 Q40,346 70,350 Q95,354 120,350"/>
+        <path d="M10,500 Q40,496 70,500 Q100,504 130,500"/>
+      </g>
+
+      <!-- ============================================ -->
+      <!-- TERRITORIES (735 BC) -->
+      <!-- ============================================ -->
+
+      <!-- ASSYRIA - now actively campaigning west, has taken tribute from many.
+           By 735 BC Tiglath-Pileser has already campaigned once (738 BC).
+           Expanding influence but core territory still Mesopotamia.
+           Has now absorbed parts of Hamath's territory. -->
+      <path class="territory" id="assyria"
+            d="M380,0 L850,0 L850,240 L800,260 L740,250 L680,240 
+               L620,250 L560,240 L520,230 L480,210 L450,190 
+               L430,160 L410,130 L390,80 L385,40 Z"
+            fill="url(#assyriaGrad)" opacity="0.72" stroke="#a03030" stroke-width="1.5"/>
+
+      <!-- BABYLONIA -->
+      <path class="territory" id="babylonia"
+            d="M520,230 L560,240 L620,250 L680,240 L740,250 
+               L800,260 L850,240 L850,450 
+               L800,460 L740,450 L680,440 
+               L620,430 L570,420 L530,400 
+               L500,370 L490,330 L500,280 Z"
+            fill="url(#babylonGrad)" opacity="0.5" stroke="#8a7040" stroke-width="1.2"/>
+
+      <!-- HAMATH - reduced, under heavy Assyrian pressure, 
+           already paying tribute since 738 BC -->
+      <path class="territory" id="hamath"
+            d="M148,60 L250,50 L340,55 L385,40 L390,80 
+               L410,130 L390,150 L350,145 L300,138 
+               L250,132 L200,128 L160,125 L150,115 L148,85 Z"
+            fill="url(#hamaGrad)" opacity="0.5" stroke="#7a6a8a" stroke-width="1.2"
+            stroke-dasharray="6,3"/>
+
+      <!-- ARAM-DAMASCUS - still independent but desperate.
+           Rezin is trying to build an anti-Assyrian coalition. -->
+      <path class="territory" id="aram"
+            d="M200,128 L250,132 L300,138 L350,145 L390,150 
+               L410,130 L430,160 L450,190 L480,210 L470,240 
+               L450,270 L420,290 L380,300 
+               L340,295 L310,285 L285,275 
+               L260,260 L240,240 L220,215 
+               L200,185 L190,158 L195,140 Z"
+            fill="url(#aramGrad)" opacity="0.72" stroke="#9a8a38" stroke-width="1.5"/>
+
+      <!-- PHOENICIA - paying tribute to Assyria since 738 BC -->
+      <path class="territory" id="phoenicia"
+            d="M148,140 L195,140 L190,158 L200,185 L220,215 
+               L225,230 L215,250 L200,265 L190,280 
+               L172,290 L160,298 L155,310 
+               L155,315 L142,300 L138,280 
+               L140,250 L142,210 L145,180 L148,155 Z"
+            fill="url(#phoenGrad)" opacity="0.6" stroke="#4aaa9a" stroke-width="1.5"
+            stroke-dasharray="6,3"/>
+
+      <!-- ISRAEL - under Pekah, allied with Aram against Judah.
+           Weakened from Jeroboam II's time but still holds significant territory. -->
+      <path class="territory" id="israel"
+            d="M155,310 L160,298 L172,290 L190,280 L200,265 
+               L215,250 L240,240 L260,260 L285,275 
+               L310,285 L340,295 L380,300 
+               L400,310 L410,340 L400,370 L380,390 
+               L350,405 L320,415 L290,420 
+               L260,418 L240,415 L220,420 
+               L195,418 L175,410 
+               L160,400 L150,380 L148,360 
+               L145,340 L155,330 L160,320 Z"
+            fill="url(#israelGrad)" opacity="0.72" stroke="#3a9a4a" stroke-width="1.5"/>
+
+      <!-- AMMON -->
+      <path class="territory" id="ammon"
+            d="M400,310 L460,290 L490,310 L500,350 
+               L490,390 L470,420 L440,430 L410,420 
+               L390,405 L380,390 L400,370 L410,340 Z"
+            fill="url(#ammonGrad)" opacity="0.65" stroke="#6a9a6a" stroke-width="1.5"/>
+
+      <!-- JUDAH - under Ahaz, besieged from multiple sides.
+           Lost some Shephelah towns to Philistia, 
+           Edom raiding from south. -->
+      <path class="territory" id="judah"
+            d="M175,410 L195,418 L220,420 L240,415 L260,418 
+               L290,420 L320,415 L340,430 L350,450 
+               L345,475 L335,495 L315,510 
+               L290,520 L260,525 L230,520 
+               L205,510 L185,495 L170,475 
+               L162,450 L165,430 Z"
+            fill="url(#judahGrad)" opacity="0.72" stroke="#3a7aaa" stroke-width="1.5"/>
+
+      <!-- PHILISTIA - emboldened, seizing Judean towns -->
+      <path class="territory" id="philistia"
+            d="M138,400 L160,400 L175,410 L165,430 L162,450 
+               L170,475 L168,500 L160,520 
+               L150,535 L148,540 
+               L148,520 L145,490 L145,460 L148,430 L140,410 Z"
+            fill="url(#philGrad)" opacity="0.72" stroke="#9a5aaa" stroke-width="1.5"/>
+
+      <!-- MOAB -->
+      <path class="territory" id="moab"
+            d="M340,430 L350,405 L380,390 L390,405 L410,420 
+               L440,430 L450,460 L445,490 
+               L430,510 L400,520 L370,520 
+               L345,510 L335,495 L345,475 L350,450 Z"
+            fill="url(#moabGrad)" opacity="0.65" stroke="#aa8a40" stroke-width="1.5"/>
+
+      <!-- EDOM - has revolted against Judah, raiding southern territory -->
+      <path class="territory" id="edom"
+            d="M230,520 L260,525 L290,520 L315,510 L335,495 
+               L345,510 L370,520 L400,520 
+               L420,550 L410,590 L390,630 
+               L360,660 L320,680 L280,685 
+               L240,670 L210,640 L195,600 
+               L190,565 L200,540 Z"
+            fill="url(#edomGrad)" opacity="0.72" stroke="#c06838" stroke-width="1.5"/>
+
+      <!-- EGYPT -->
+      <path class="territory" id="egypt"
+            d="M0,600 L100,580 L130,560 L148,540 L150,535 
+               L160,520 L168,500 L185,495 L205,510 
+               L200,540 L190,565 L195,600 
+               L180,650 L150,700 L120,730 L80,750 L0,750 Z"
+            fill="url(#egyptGrad)" opacity="0.5" stroke="#aa9a4a" stroke-width="1.5"/>
+
+      <!-- ============================================ -->
+      <!-- WATER FEATURES -->
+      <!-- ============================================ -->
+      <ellipse cx="310" cy="470" rx="11" ry="38" fill="#152535" opacity="0.85" transform="rotate(-3, 310, 470)"/>
+      <ellipse cx="290" cy="305" rx="10" ry="15" fill="#1a3348" opacity="0.85"/>
+      <path d="M290,320 Q295,350 300,380 Q305,410 310,432" stroke="#1a3348" stroke-width="2.5" fill="none" opacity="0.7"/>
+      <path d="M540,0 Q520,40 530,80 Q545,120 535,160 Q520,200 530,240 Q545,280 540,320 Q530,360 540,400 Q550,430 545,450" stroke="#2a4a60" stroke-width="2.5" fill="none" opacity="0.5"/>
+      <path d="M650,0 Q640,50 645,100 Q655,150 648,200 Q638,240 645,280 Q655,320 650,360 Q640,400 645,440" stroke="#2a4a60" stroke-width="2" fill="none" opacity="0.4"/>
+
+      <!-- Water labels -->
+      <text x="70" y="350" class="water-label" font-size="15" transform="rotate(-85,70,350)" text-anchor="middle">Mediterranean Sea</text>
+      <text x="310" y="472" class="water-label" font-size="7.5" text-anchor="middle">Dead Sea</text>
+      <text x="290" y="300" class="water-label" font-size="7" text-anchor="middle">Galilee</text>
+      <text x="552" y="85" class="water-label" font-size="9" transform="rotate(-15,552,85)">Euphrates</text>
+      <text x="660" y="85" class="water-label" font-size="8" transform="rotate(-10,660,85)">Tigris</text>
+      <text x="295" y="375" class="water-label" font-size="7" transform="rotate(-5,295,375)">Jordan R.</text>
+
+      <!-- Desert labels -->
+      <text x="580" y="520" class="desert-label" font-size="14" fill="#5a5040" opacity="0.5" text-anchor="middle" transform="rotate(8,580,520)">ARABIAN DESERT</text>
+      <text x="490" y="280" class="desert-label" font-size="10" fill="#4a4030" opacity="0.45" text-anchor="middle" transform="rotate(-15,490,280)">Syrian Desert</text>
+      <text x="180" y="580" class="desert-label" font-size="9" fill="#4a4030" opacity="0.45" text-anchor="middle">Negev</text>
+
+      <!-- ============================================ -->
+      <!-- TERRITORY LABELS -->
+      <!-- ============================================ -->
+      <text x="620" y="105" class="territory-label" font-size="24" fill="#d4a0a0" letter-spacing="0.35em">ASSYRIA</text>
+      <text x="620" y="128" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:11px; fill:#b08080; text-anchor:middle;">Tiglath-Pileser III — actively expanding west</text>
+
+      <text x="700" y="360" class="territory-label" font-size="15" fill="#c0a870" letter-spacing="0.2em">BABYLONIA</text>
+      <text x="700" y="378" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; fill:#9a8860; text-anchor:middle;">Assyrian vassal</text>
+
+      <text x="280" y="88" class="territory-label" font-size="11" fill="#c0b0d0" opacity="0.7">HAMATH</text>
+      <text x="280" y="102" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:8px; fill:#9080a0; text-anchor:middle; opacity:0.7;">Assyrian tributary</text>
+
+      <text x="365" y="225" class="territory-label" font-size="15" fill="#d4c878">ARAM</text>
+      <text x="365" y="243" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; fill:#b0a060; text-anchor:middle;">King Rezin</text>
+
+      <text x="175" y="240" class="territory-label" font-size="10" fill="#80d0d0" opacity="0.7" transform="rotate(-75,175,240)">PHOENICIA</text>
+
+      <text x="265" y="355" class="territory-label" font-size="17" fill="#80d080">ISRAEL</text>
+      <text x="265" y="373" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; fill:#60b060; text-anchor:middle;">King Pekah</text>
+
+      <text x="255" y="465" class="territory-label" font-size="16" fill="#80b0e0">JUDAH</text>
+      <text x="255" y="483" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; fill:#60a0d0; text-anchor:middle;">King Ahaz — under siege</text>
+
+      <text x="460" y="365" class="territory-label" font-size="11" fill="#90c090">AMMON</text>
+      <text x="400" y="475" class="territory-label" font-size="12" fill="#d0b060">MOAB</text>
+      <text x="148" y="475" class="territory-label" font-size="9" fill="#c090d0" transform="rotate(-80,148,475)">PHILISTIA</text>
+      <text x="310" y="610" class="territory-label" font-size="15" fill="#e0a070">EDOM</text>
+      <text x="110" y="680" class="territory-label" font-size="16" fill="#d0c070">EGYPT</text>
+
+      <!-- ============================================ -->
+      <!-- MILITARY MOVEMENT ARROWS -->
+      <!-- ============================================ -->
+
+      <!-- 1. ARAM + ISRAEL coalition attacking JUDAH (red - the main crisis of Isaiah 7) -->
+      <!-- Aram marching south toward Jerusalem -->
+      <path d="M365,260 Q350,310 330,360 Q310,400 280,435"
+            stroke="#c04040" stroke-width="3.5" fill="none" opacity="0.8"
+            marker-end="url(#arrowRed)" stroke-dasharray="8,4"
+            filter="url(#glowRed)" class="attack-arrow"/>
+
+      <!-- Israel marching south toward Jerusalem -->
+      <path d="M250,390 Q255,410 260,430"
+            stroke="#c04040" stroke-width="3.5" fill="none" opacity="0.8"
+            marker-end="url(#arrowRed)" stroke-dasharray="8,4"
+            filter="url(#glowRed)" class="attack-arrow"/>
+
+      <!-- 2. EDOM raiding Judah from south (orange) -->
+      <path d="M280,555 Q270,540 260,528"
+            stroke="#c08030" stroke-width="2.5" fill="none" opacity="0.7"
+            marker-end="url(#arrowOrange)" stroke-dasharray="6,3" class="attack-arrow"/>
+
+      <!-- 3. PHILISTIA seizing Judean Shephelah towns (orange) -->
+      <path d="M162,455 Q168,448 172,442"
+            stroke="#c08030" stroke-width="2.5" fill="none" opacity="0.7"
+            marker-end="url(#arrowOrange)" stroke-dasharray="6,3" class="attack-arrow"/>
+
+      <!-- 4. ASSYRIA looming threat from northeast (yellow - imminent) -->
+      <path d="M460,195 Q440,220 425,250"
+            stroke="#c0a840" stroke-width="3" fill="none" opacity="0.6"
+            marker-end="url(#arrowYellow)" stroke-dasharray="10,5" class="attack-arrow"/>
+      
+      <!-- Assyria wider western campaign arrow -->
+      <path d="M430,160 Q390,200 350,250"
+            stroke="#c0a840" stroke-width="2" fill="none" opacity="0.4"
+            marker-end="url(#arrowYellow)" stroke-dasharray="10,5" class="attack-arrow"/>
+
+      <!-- 5. Ahaz's appeal to Assyria (cyan - diplomatic) -->
+      <path d="M270,440 Q330,350 400,260 Q450,200 500,160"
+            stroke="#40a0c0" stroke-width="2" fill="none" opacity="0.5"
+            marker-end="url(#arrowCyan)" stroke-dasharray="4,6" class="attack-arrow"/>
+
+      <!-- Arrow labels on map -->
+      <text x="295" y="345" class="arrow-label" font-size="8" fill="#e06060" text-anchor="middle" transform="rotate(-55,295,345)">ARAM-ISRAEL</text>
+      <text x="290" y="355" class="arrow-label" font-size="7" fill="#e06060" text-anchor="middle" transform="rotate(-55,290,355)">COALITION</text>
+
+      <text x="400" y="205" class="arrow-label" font-size="7" fill="#d0a840" text-anchor="middle" opacity="0.7">ASSYRIA</text>
+      <text x="400" y="215" class="arrow-label" font-size="6" fill="#d0a840" text-anchor="middle" opacity="0.7">ADVANCING</text>
+
+      <!-- ============================================ -->
+      <!-- KEY LOCATION: Upper pool / Fuller's Field -->
+      <!-- ============================================ -->
+      <g transform="translate(248, 452)">
+        <circle cx="0" cy="0" r="7" fill="none" stroke="#60c0e0" stroke-width="1.5" opacity="0.7" stroke-dasharray="3,2"/>
+        <text x="14" y="3" font-family="Cormorant Garamond, serif" font-size="7" fill="#60c0e0" font-style="italic" opacity="0.8">Isaiah meets Ahaz</text>
+        <text x="14" y="12" font-family="Cormorant Garamond, serif" font-size="6" fill="#60c0e0" font-style="italic" opacity="0.6">"the end of the conduit</text>
+        <text x="14" y="20" font-family="Cormorant Garamond, serif" font-size="6" fill="#60c0e0" font-style="italic" opacity="0.6">of the upper pool" (7:3)</text>
+      </g>
+
+      <!-- ============================================ -->
+      <!-- MAJOR CITIES -->
+      <!-- ============================================ -->
+      <g class="cities">
+        <circle cx="660" cy="60" r="4.5" fill="#e8d080" class="city-dot" filter="url(#glow)"/>
+        <text x="674" y="64" class="city-label" font-size="11">Nineveh</text>
+
+        <circle cx="640" cy="110" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="652" y="114" class="city-label" font-size="9">Calah</text>
+
+        <circle cx="610" cy="165" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="622" y="169" class="city-label" font-size="9">Asshur</text>
+
+        <circle cx="600" cy="380" r="3.5" fill="#d4b060" class="city-dot"/>
+        <text x="612" y="384" class="city-label" font-size="9">Babylon</text>
+
+        <circle cx="280" cy="84" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="292" y="80" class="city-label" font-size="8">Hamath</text>
+
+        <circle cx="380" cy="250" r="4.5" fill="#e8d080" class="city-dot" filter="url(#glow)"/>
+        <text x="393" y="254" class="city-label" font-size="11">Damascus</text>
+
+        <circle cx="162" cy="148" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="170" y="145" class="city-label" font-size="8">Byblos</text>
+
+        <circle cx="165" cy="210" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="173" y="207" class="city-label" font-size="9">Sidon</text>
+
+        <circle cx="168" cy="268" r="3.5" fill="#d4c070" class="city-dot" filter="url(#glow)"/>
+        <text x="176" y="265" class="city-label" font-size="9">Tyre</text>
+
+        <circle cx="265" cy="275" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="250" y="270" class="city-label" font-size="9">Dan</text>
+
+        <circle cx="225" cy="330" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="203" y="325" class="city-label" font-size="9">Megiddo</text>
+
+        <circle cx="255" cy="335" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="263" y="332" class="city-label" font-size="8">Jezreel</text>
+
+        <circle cx="230" cy="380" r="5" fill="#e8d080" class="city-dot" filter="url(#glow)"/>
+        <text x="200" y="393" class="city-label" font-size="11" font-weight="bold">Samaria ★</text>
+
+        <circle cx="162" cy="408" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="140" y="402" class="city-label" font-size="8">Joppa</text>
+
+        <circle cx="262" cy="443" r="6" fill="#f0e090" class="city-dot" filter="url(#glow)"/>
+        <text x="218" y="440" class="city-label" font-size="12" font-weight="bold">Jerusalem ★</text>
+
+        <circle cx="250" cy="490" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="258" y="494" class="city-label" font-size="9">Hebron</text>
+
+        <circle cx="205" cy="480" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="180" y="482" class="city-label" font-size="8">Lachish</text>
+
+        <circle cx="215" cy="530" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="175" y="534" class="city-label" font-size="9">Beersheba</text>
+
+        <circle cx="155" cy="505" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="135" y="500" class="city-label" font-size="9">Gaza</text>
+
+        <circle cx="152" cy="478" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="128" y="475" class="city-label" font-size="8">Ashkelon</text>
+
+        <circle cx="157" cy="450" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="131" y="448" class="city-label" font-size="8">Ashdod</text>
+
+        <circle cx="420" cy="380" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="430" y="384" class="city-label" font-size="9">Rabbah</text>
+
+        <circle cx="380" cy="480" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="390" y="484" class="city-label" font-size="8">Dibon</text>
+
+        <circle cx="350" cy="560" r="3" fill="#d4c070" class="city-dot"/>
+        <text x="360" y="564" class="city-label" font-size="9">Bozrah</text>
+
+        <!-- Elath / Ezion-Geber (Edom took this from Judah - 2 Kings 16:6) -->
+        <circle cx="290" cy="660" r="2.5" fill="#d4c070" class="city-dot"/>
+        <text x="300" y="664" class="city-label" font-size="8">Elath</text>
+        <text x="300" y="674" style="font-family:'Cormorant Garamond',serif; font-size:6px; fill:#c08040; font-style:italic;">seized by Edom</text>
+      </g>
+
+      <!-- Compass Rose -->
+      <g transform="translate(775, 660)" opacity="0.6">
+        <circle cx="0" cy="0" r="28" fill="none" stroke="#8a7e60" stroke-width="0.5"/>
+        <line x1="0" y1="-25" x2="0" y2="25" stroke="#8a7e60" stroke-width="0.5"/>
+        <line x1="-25" y1="0" x2="25" y2="0" stroke="#8a7e60" stroke-width="0.5"/>
+        <polygon points="0,-22 -4,-8 4,-8" fill="#c0b080"/>
+        <text x="0" y="-30" text-anchor="middle" font-family="Cinzel, serif" font-size="10" fill="#c0b080">N</text>
+        <text x="0" y="40" text-anchor="middle" font-family="Cinzel, serif" font-size="8" fill="#8a7e60">S</text>
+        <text x="34" y="4" text-anchor="middle" font-family="Cinzel, serif" font-size="8" fill="#8a7e60">E</text>
+        <text x="-34" y="4" text-anchor="middle" font-family="Cinzel, serif" font-size="8" fill="#8a7e60">W</text>
+      </g>
+
+      <!-- Scale -->
+      <g transform="translate(630, 710)" opacity="0.5">
+        <line x1="0" y1="0" x2="90" y2="0" stroke="#8a7e60" stroke-width="1"/>
+        <line x1="0" y1="-4" x2="0" y2="4" stroke="#8a7e60" stroke-width="1"/>
+        <line x1="45" y1="-3" x2="45" y2="3" stroke="#8a7e60" stroke-width="0.5"/>
+        <line x1="90" y1="-4" x2="90" y2="4" stroke="#8a7e60" stroke-width="1"/>
+        <text x="45" y="14" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="9" fill="#8a7e60">~100 miles</text>
+      </g>
+
+    </svg>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div class="tooltip" id="tooltip">
+  <h3 id="tt-name"></h3>
+  <div class="ruler" id="tt-ruler"></div>
+  <p id="tt-desc"></p>
+  <div class="relation" id="tt-relation"></div>
+  <div class="scripture-tt" id="tt-scripture"></div>
+</div>
+
+<!-- Legend -->
+<div class="legend">
+  <div class="legend-inner">
+    <div class="legend-title">Kingdoms &amp; Territories · 735 BC</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#8b2020;"></div> Assyrian Empire</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#6a5030;"></div> Babylonia (Assyrian vassal)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#6a5a7a; opacity:0.6;"></div> Hamath (tributary)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#7a6b28;"></div> Aram-Damascus</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#3a8a8a; opacity:0.6;"></div> Phoenicia (tributary)</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#2a6e3a;"></div> Kingdom of Israel</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#2a5a8a;"></div> Kingdom of Judah</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#5a7a5a;"></div> Ammon</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#8a6a30;"></div> Moab</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#7a4a8a;"></div> Philistia</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#a85030;"></div> Edom</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#8a7a3a;"></div> Egypt</div>
+  </div>
+</div>
+
+<!-- Arrow Legend -->
+<div class="arrow-legend">
+  <div class="arrow-legend-inner">
+    <h3>Military Movements &amp; Diplomacy</h3>
+    <div class="arrow-legend-grid">
+      <div class="arrow-legend-item">
+        <div class="arrow-sample" style="background:#c04040;"></div>
+        Aram-Israel coalition attacking Judah (Isaiah 7:1–2)
+      </div>
+      <div class="arrow-legend-item">
+        <div class="arrow-sample" style="background:#c08030;"></div>
+        Edom &amp; Philistia raiding Judah (2 Chr 28:17–18)
+      </div>
+      <div class="arrow-legend-item">
+        <div class="arrow-sample" style="background:#c0a840;"></div>
+        Assyria's westward advance (imminent threat)
+      </div>
+      <div class="arrow-legend-item">
+        <div class="arrow-sample" style="background:#40a0c0;"></div>
+        Ahaz's appeal to Assyria for help (2 Kings 16:7)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- What Happens Next -->
+<div class="aftermath">
+  <div class="aftermath-inner">
+    <h2>⏳ What Happens Next — The Consequences</h2>
+    <div class="aftermath-events">
+      <div class="aftermath-event prophecy">
+        <div class="year">c. 735 BC — Isaiah 7: The Emmanuel Prophecy</div>
+        <div class="desc">God sends Isaiah to meet Ahaz at the upper pool's conduit. Ahaz refuses to ask for a sign. Isaiah declares: <em>"The Lord himself will give you a sign. Behold, the virgin shall conceive and bear a son, and shall call his name <strong>Immanuel</strong>"</em> (7:14). Isaiah tells Ahaz not to fear the Aram-Israel coalition — <strong>both kingdoms will be destroyed</strong> — but warns that Assyria, the very power Ahaz is courting, will devastate Judah as well (7:17–20).</div>
+      </div>
+      <div class="aftermath-event destruction">
+        <div class="year">734–732 BC — Tiglath-Pileser Responds</div>
+        <div class="desc">Ahaz sends tribute to Tiglath-Pileser: <em>"I am your servant and your son. Come up and save me"</em> (2 Kings 16:7). Assyria campaigns west. <strong>Aram-Damascus is destroyed</strong> (732 BC). Rezin is executed. Israel loses Galilee, Gilead, and all northern territories. Tens of thousands deported. Only Samaria and a small surrounding region remain of the Northern Kingdom.</div>
+      </div>
+      <div class="aftermath-event destruction">
+        <div class="year">722 BC — The Fall of Israel</div>
+        <div class="desc">Hoshea, Israel's last king, rebels against Assyria with Egyptian encouragement. <strong>Shalmaneser V besieges Samaria for 3 years</strong>. The city falls. The Northern Kingdom ceases to exist. Population deported and scattered — the <strong>"Lost Ten Tribes."</strong> Foreign peoples resettled in Samaria (2 Kings 17).</div>
+      </div>
+      <div class="aftermath-event">
+        <div class="year">715–701 BC — Judah Under Hezekiah</div>
+        <div class="desc">Ahaz's son <strong>Hezekiah</strong> reverses course — reforms worship, removes idols, and trusts in God. But when he rebels against Assyria, <strong>Sennacherib</strong> invades in 701 BC, conquers 46 Judean cities, and besieges Jerusalem. God delivers Jerusalem miraculously (Isaiah 36–37). Judah survives — but as Isaiah prophesied, Assyria brings devastation to the land.</div>
+      </div>
+      <div class="aftermath-event prophecy">
+        <div class="year">The Larger Fulfillment</div>
+        <div class="desc">Isaiah's Emmanuel prophecy echoes far beyond its immediate context. The child named "God With Us" points to a day when God's presence would dwell with His people in a far greater way — a theme Matthew explicitly connects to the birth of Jesus Christ (Matthew 1:22–23).</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-scripture">
+  "Therefore the Lord himself will give you a sign.<br>
+  Behold, the virgin shall conceive and bear a son,<br>
+  and shall call his name Immanuel."<br>
+  — Isaiah 7:14
+</div>
+
+<script>
+const data = {
+  assyria: {
+    name: "Neo-Assyrian Empire",
+    ruler: "Tiglath-Pileser III (745–727 BC)",
+    desc: "By 735 BC, Assyria is the undisputed superpower and actively campaigning into the Levant. Tiglath-Pileser has already forced tribute from Hamath, Phoenicia, and other states (738 BC). He is the reason Rezin and Pekah are desperately trying to build an anti-Assyrian coalition — and the power Ahaz fatefully appeals to for rescue.",
+    relation: "⚔️ The looming catastrophe. Within 3 years, Assyria will destroy Aram-Damascus and strip Israel of most territory. Within 13 years, Israel will cease to exist entirely.",
+    scripture: "\"I am your servant and your son. Come up and save me from the hand of the king of Aram and from the hand of the king of Israel\" — Ahaz to Tiglath-Pileser (2 Kings 16:7)"
+  },
+  babylonia: {
+    name: "Babylonia",
+    ruler: "Nabonassar → Nabu-mukin-zeri (weak, dominated by Assyria)",
+    desc: "Babylonia remains under Assyrian domination in 735 BC — politically irrelevant to the current crisis. But Isaiah prophetically sees Babylon's future role. In Isaiah 39, he warns Hezekiah that everything in Jerusalem will one day be carried off to Babylon.",
+    relation: "🔮 Dormant but prophetically significant. Isaiah already foresees Babylon's future destruction of Jerusalem: 'Nothing shall be left, says the LORD' (Isaiah 39:6). This won't happen for another 150 years.",
+    scripture: "\"Behold, the days are coming, when all that is in your house... shall be carried to Babylon. Nothing shall be left\" — Isaiah 39:6"
+  },
+  hamath: {
+    name: "Kingdom of Hamath",
+    ruler: "Eni-ilu (Assyrian tributary)",
+    desc: "By 735 BC, Hamath has been paying tribute to Assyria since 738 BC. Its borders have shrunk as Assyria absorbed northern territories. Hamath is shown with dashed borders — still nominally independent but effectively an Assyrian dependency.",
+    relation: "📉 Diminished. Paying tribute. Will be fully absorbed by Assyria after a revolt in 720 BC. Its population will be resettled in Samaria after Israel's fall (2 Kings 17:24).",
+    scripture: "\"Where are the gods of Hamath and Arpad?\" — Sennacherib's messenger, taunting Jerusalem (Isaiah 36:19)"
+  },
+  aram: {
+    name: "Aram-Damascus",
+    ruler: "Rezin (died 732 BC)",
+    desc: "THIS IS THE CRISIS OF ISAIAH 7. Rezin, the last king of Aram, has allied with Pekah of Israel to force Judah into their anti-Assyrian coalition. They march on Jerusalem to depose Ahaz and install 'the son of Tabeel' as a puppet king. God tells Isaiah: these are mere 'two smoldering stumps of firebrands' — they will fail, and both kingdoms will be destroyed.",
+    relation: "⚔️ Leading the coalition against Judah RIGHT NOW. But Isaiah prophesies: 'Within sixty-five years Ephraim will be shattered... the head of Aram is Damascus, and the head of Damascus is Rezin.' Aram falls to Assyria in 732 BC — just 3 years away.",
+    scripture: "\"Be careful, be quiet, do not fear, and do not let your heart be faint because of these two smoldering stumps of firebrands\" — Isaiah 7:4"
+  },
+  phoenicia: {
+    name: "Phoenicia",
+    ruler: "City-kings paying Assyrian tribute since 738 BC",
+    desc: "Phoenicia has been paying heavy tribute to Tiglath-Pileser since 738 BC. Shown with dashed borders — nominally self-governing but not truly independent. Tyre remains wealthy from maritime trade but politically constrained. The Phoenician cities are not involved in the Aram-Israel coalition.",
+    relation: "💰 Tributary to Assyria. Not involved in the current crisis. Still commercially important but politically sidelined.",
+    scripture: ""
+  },
+  israel: {
+    name: "Kingdom of Israel",
+    ruler: "Pekah son of Remaliah (752–732 BC)",
+    desc: "Israel under Pekah has allied with Rezin of Aram to attack Judah — the other half of the coalition in Isaiah 7. Pekah seized the throne by assassinating Pekahiah (2 Kings 15:25). He is trying to force Ahaz into an anti-Assyrian alliance. Israel is still significant but a shadow of Jeroboam II's kingdom. The prophet Hosea is ministering during these final years.",
+    relation: "⚔️ Attacking Judah alongside Aram. Isaiah contemptuously calls Pekah merely 'the son of Remaliah' (7:4-5) — denying him royal legitimacy. Israel will lose most territory within 3 years and be destroyed within 13.",
+    scripture: "\"The head of Ephraim is Samaria, and the head of Samaria is the son of Remaliah. If you are not firm in faith, you will not be firm at all.\" — Isaiah 7:9"
+  },
+  judah: {
+    name: "Kingdom of Judah",
+    ruler: "Ahaz son of Jotham (735–715 BC)",
+    desc: "THE FOCUS OF ISAIAH 7. Judah is besieged on every side: Aram and Israel from the north, Edom raiding from the south, Philistia seizing towns in the west. Ahaz is terrified — 'the heart of Ahaz and the heart of his people shook as the trees of the forest shake before the wind' (7:2). God sends Isaiah to the upper pool's conduit to tell Ahaz not to fear, to trust God. Ahaz refuses, and instead sends tribute to Assyria — a decision with catastrophic long-term consequences.",
+    relation: "🎯 THE TARGET. Under attack from all sides. Ahaz's choice to trust Assyria over God defines the next century of Judah's history. Isaiah gives the Emmanuel sign as both comfort and warning.",
+    scripture: "\"Ask a sign of the LORD your God; let it be deep as Sheol or high as heaven.\" But Ahaz said, \"I will not ask, and I will not put the LORD to the test.\" — Isaiah 7:11–12"
+  },
+  ammon: {
+    name: "Kingdom of Ammon",
+    ruler: "Various kings",
+    desc: "Ammon is not directly involved in the Syro-Ephraimite War but is watching events carefully. As a Transjordanian kingdom, it would be affected by any Assyrian campaign through the region. Likely paying or about to pay tribute to Assyria.",
+    relation: "👀 Observing. Not a major player in this specific crisis but will become an Assyrian vassal.",
+    scripture: ""
+  },
+  moab: {
+    name: "Kingdom of Moab",
+    ruler: "Various kings",
+    desc: "Moab, like Ammon, is on the sidelines of the Syro-Ephraimite War. Located on the plateau east of the Dead Sea. Isaiah 15–16 contains oracles against Moab, suggesting coming devastation — likely from Assyrian campaigns.",
+    relation: "👀 On the sidelines. Isaiah pronounces oracles of coming judgment against Moab (Isaiah 15–16).",
+    scripture: "\"We have heard of the pride of Moab — how proud he is! — of his arrogance, his pride, and his insolence\" — Isaiah 16:6"
+  },
+  philistia: {
+    name: "Philistia",
+    ruler: "City-kings — emboldened against Judah",
+    desc: "Philistia has seized the opportunity of Judah's crisis to recapture towns in the Shephelah (western foothills) and the Negev. 2 Chronicles 28:18 records that the Philistines took Beth-shemesh, Aijalon, Gederoth, Soco, Timnah, and Gimzo. They are exploiting Ahaz's weakness.",
+    relation: "⚔️ Actively raiding Judah's western towns. Taking advantage of the multi-front crisis to expand at Judah's expense.",
+    scripture: "\"The Philistines had made raids on the cities of the Shephelah and of the Negeb of Judah, and had taken Beth-shemesh, Aijalon, Gederoth, Soco...\" — 2 Chronicles 28:18"
+  },
+  edom: {
+    name: "Kingdom of Edom",
+    ruler: "Various kings — in revolt against Judah",
+    desc: "Edom has revolted against Judah and is actively raiding. 2 Chronicles 28:17 says Edom 'came and defeated Judah and carried away captives.' Most significantly, Edom seized the strategic port of Elath on the Gulf of Aqaba (2 Kings 16:6), cutting Judah off from Red Sea trade — a major economic blow.",
+    relation: "⚔️ In open revolt. Raiding Judah and seizing Elath. Exploiting the chaos alongside Philistia while Ahaz faces the northern coalition.",
+    scripture: "\"The Edomites had again invaded and defeated Judah and carried away captives\" — 2 Chronicles 28:17"
+  },
+  egypt: {
+    name: "Egypt",
+    ruler: "Multiple competing dynasties (fragmented)",
+    desc: "Egypt is still fragmented around 735 BC — too weak and divided to intervene meaningfully. The Nubian 25th Dynasty is consolidating power in the south but has not yet unified Egypt. Despite this, some in Judah and Israel look to Egypt for help against Assyria. Isaiah repeatedly condemns this false hope.",
+    relation: "🚫 A false hope. Isaiah warns against relying on Egypt: 'Woe to those who go down to Egypt for help' (31:1). Egypt is too divided to help anyone.",
+    scripture: "\"Egypt's help is worthless and empty; therefore I have called her Rahab who sits still.\" — Isaiah 30:7"
+  }
+};
+
+const tooltip = document.getElementById('tooltip');
+const ttName = document.getElementById('tt-name');
+const ttRuler = document.getElementById('tt-ruler');
+const ttDesc = document.getElementById('tt-desc');
+const ttRelation = document.getElementById('tt-relation');
+const ttScripture = document.getElementById('tt-scripture');
+
+document.querySelectorAll('.territory').forEach(el => {
+  const id = el.id;
+  const info = data[id];
+  if (!info) return;
+
+  el.addEventListener('mouseenter', (e) => {
+    ttName.textContent = info.name;
+    ttRuler.textContent = info.ruler;
+    ttDesc.textContent = info.desc;
+    ttRelation.textContent = info.relation;
+    ttScripture.textContent = info.scripture || '';
+    ttScripture.style.display = info.scripture ? 'block' : 'none';
+    tooltip.classList.add('visible');
+  });
+
+  el.addEventListener('mousemove', (e) => {
+    let x = e.clientX + 16;
+    let y = e.clientY + 16;
+    const rect = tooltip.getBoundingClientRect();
+    if (x + 390 > window.innerWidth) x = e.clientX - 400;
+    if (y + rect.height > window.innerHeight) y = e.clientY - rect.height - 16;
+    tooltip.style.left = x + 'px';
+    tooltip.style.top = y + 'px';
+  });
+
+  el.addEventListener('mouseleave', () => {
+    tooltip.classList.remove('visible');
+  });
+});
+</script>
+
+</body>
+</html>
